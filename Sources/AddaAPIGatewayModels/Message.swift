@@ -10,11 +10,11 @@ import Vapor
 import Fluent
 import FluentMongoDriver
 
-final class Message: Model {
+public final class Message: Model {
     
-    static var schema = "messages"
+    public static var schema = "messages"
     
-    init() {}
+    public init() {}
     
 //    init(messageItem: Item) {
 //        self.id = ObjectId(messageItem.id)
@@ -27,7 +27,7 @@ final class Message: Model {
 //        self.isDelivered = messageItem.isDelivered
 //    }
     
-    init(_ chatMessage: ChatMessage, senderId: User.IDValue? = nil, receipientId: User.IDValue? = nil) {
+    public init(_ chatMessage: ChatMessage, senderId: User.IDValue? = nil, receipientId: User.IDValue? = nil) {
         self.$conversation.id =  ObjectId(chatMessage.conversationId)!
         self.$sender.id = senderId
         self.$recipient.id = receipientId
@@ -37,30 +37,30 @@ final class Message: Model {
         self.isDelivered = chatMessage.isDelivered
     }
     
-    @ID(custom: "id") var id: ObjectId?
-    @Field(key: "messageBody") var messageBody: String
-    @Field(key: "messageType") var messageType: MessageType
-    @Field(key: "isRead") var isRead: Bool
-    @Field(key: "isDelivered") var isDelivered: Bool
+    @ID(custom: "id") public var id: ObjectId?
+    @Field(key: "messageBody") public var messageBody: String
+    @Field(key: "messageType") public var messageType: MessageType
+    @Field(key: "isRead") public var isRead: Bool
+    @Field(key: "isDelivered") public var isDelivered: Bool
     
-    @Parent(key: "conversationId") var conversation: Conversation
-    @OptionalParent(key: "sender") var sender: User?
-    @OptionalParent(key: "recipient") var recipient: User?
+    @Parent(key: "conversationId") public var conversation: Conversation
+    @OptionalParent(key: "sender") public var sender: User?
+    @OptionalParent(key: "recipient") public var recipient: User?
     
-    @Timestamp(key: "createdAt", on: .create) var createdAt: Date?
-    @Timestamp(key: "updatedAt", on: .update) var updatedAt: Date?
-    @Timestamp(key: "deletedAt", on: .delete) var deletedAt: Date?
+    @Timestamp(key: "createdAt", on: .create) public var createdAt: Date?
+    @Timestamp(key: "updatedAt", on: .update) public var updatedAt: Date?
+    @Timestamp(key: "deletedAt", on: .delete) public var deletedAt: Date?
 
 }
 
 extension Message {
-    var response: Item {
+    public var response: Item {
         .init(self)
     }
     
-    struct Item: Content, Codable {
+    public struct Item: Content, Codable {
         
-        init(_ message: Message) {
+        public init(_ message: Message) {
             self.id = message.id
             self.conversationId = message.$conversation.id
             self.sender = message.sender?.response
@@ -74,41 +74,32 @@ extension Message {
             self.deletedAt = message.deletedAt
         }
         
-        let id: ObjectId?
-        let messageBody: String
-        let messageType: MessageType
-        let isRead, isDelivered: Bool
-        let sender: User.Response?
-        let recipient: User.Response?
-        let conversationId: ObjectId
-        let updatedAt, createdAt, deletedAt: Date?
+        public let id: ObjectId?
+        public let messageBody: String
+        public let messageType: MessageType
+        public let isRead, isDelivered: Bool
+        public let sender: User.Response?
+        public let recipient: User.Response?
+        public let conversationId: ObjectId
+        public let updatedAt, createdAt, deletedAt: Date?
     }
 }
 
 
-struct ChatMessage: Codable, Identifiable, Hashable {
-    var id: String?
-    var conversationId: String
-    var sender: User?
-    var recipient: User?
-    var messageBody: String
-    var messageType: MessageType
-    var isRead: Bool
-    var isDelivered: Bool
+public struct ChatMessage: Codable, Identifiable, Hashable {
+    public var id: ObjectId?
+    public var conversationId: String
+    public var sender: User?
+    public var recipient: User?
+    public var messageBody: String
+    public var messageType: MessageType
+    public var isRead: Bool
+    public var isDelivered: Bool
 
-    var createdAt: Date?
-    var updatedAt: Date?
-    var deletedAt: Date?
+    public var createdAt, updatedAt, deletedAt: Date?
     
-    
-    init(_ message: Message) {
-        
-        if message.id == nil {
-            self.id = ObjectId().hexString
-        } else {
-            self.id = message.id!.hexString
-        }
-
+    public init(_ message: Message) {
+        self.id = message.id
         self.conversationId = message.conversation.id?.hexString ?? ""
         self.sender = message.sender ?? User.init()
         self.recipient = message.recipient
@@ -121,7 +112,7 @@ struct ChatMessage: Codable, Identifiable, Hashable {
         self.deletedAt = message.deletedAt
     }
     
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(messageBody)
     }

@@ -13,7 +13,7 @@ private let jsonEncoder: JSONEncoder = {
     return encoder
 }()
 
-enum ChatOutGoingEvent: Encodable, Decodable {
+public enum ChatOutGoingEvent: Encodable, Decodable {
     
     case message(ChatMessage)
     case connect(ChatConversation)
@@ -29,7 +29,7 @@ enum ChatOutGoingEvent: Encodable, Decodable {
         case unknownValue
     }
     
-    init(from decoder: Decoder) throws {
+    public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         let type = try container.decode(String.self, forKey: .type)
         
@@ -54,7 +54,7 @@ enum ChatOutGoingEvent: Encodable, Decodable {
         }
     }
     
-    func encode(to encoder: Encoder) throws {
+    public func encode(to encoder: Encoder) throws {
         var kvc = encoder.container(keyedBy: String.self)
         
         switch self {

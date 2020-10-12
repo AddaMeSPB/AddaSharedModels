@@ -10,12 +10,12 @@ import Vapor
 import Fluent
 import FluentMongoDriver
 
-final class GeoLocation: Model {
-    static var schema = "geo_locations"
+public final class GeoLocation: Model {
+    public static var schema = "geo_locations"
 
-    init() {}
+    public init() {}
     
-    init(id: ObjectId? = nil, addressName: String, coordinates: [Double], geoType: GeoType, eventID: Event.IDValue) {
+    public init(id: ObjectId? = nil, addressName: String, coordinates: [Double], geoType: GeoType, eventID: Event.IDValue) {
         self.id = id
         self.addressName = addressName
         self.coordinates = coordinates
@@ -23,21 +23,21 @@ final class GeoLocation: Model {
         self.$event.id = eventID
     }
     
-    @ID(custom: "id") var id: ObjectId?
-    @Field(key: "addressName") var addressName: String
-    @Field(key: "type") var geoType: GeoType
-    @Field(key: "coordinates") var coordinates: [Double]
-    @Parent(key: "eventId") var event: Event
+    @ID(custom: "id") public var id: ObjectId?
+    @Field(key: "addressName") public var addressName: String
+    @Field(key: "type") public var geoType: GeoType
+    @Field(key: "coordinates") public var coordinates: [Double]
+    @Parent(key: "eventId") public var event: Event
 
-    @Timestamp(key: "created_at", on: .create) var createdAt: Date?
-    @Timestamp(key: "updated_at", on: .update) var updatedAt: Date?
-    @Timestamp(key: "deleted_at", on: .delete) var deletedAt: Date?
+    @Timestamp(key: "created_at", on: .create) public var createdAt: Date?
+    @Timestamp(key: "updated_at", on: .update) public var updatedAt: Date?
+    @Timestamp(key: "deleted_at", on: .delete) public var deletedAt: Date?
 
 }
 
 extension GeoLocation: Content {}
 
-enum GeoType: String {
+public enum GeoType: String {
     case Point
     case LineString
     case Polygon

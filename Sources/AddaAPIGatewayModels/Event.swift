@@ -10,10 +10,10 @@ import Vapor
 import Fluent
 import FluentMongoDriver
 
-final class Event: Model, Content {
-    static var schema = "events"
+public final class Event: Model, Content {
+    public static var schema = "events"
 
-    init() {}
+    public init() {}
     
     init(id: ObjectId? = nil, name: String, imageUrl: String? = nil, duration: Int, categories: String, isActive: Bool, ownerId: User.IDValue, conversationId: Conversation.IDValue) {
         self.id = id
@@ -26,20 +26,29 @@ final class Event: Model, Content {
         self.$conversation.id = conversationId
     }
     
-    @ID(custom: "id") var id: ObjectId?
-    @Field(key: "name") var name: String
-    @OptionalField(key: "imageUrl") var imageUrl: String?
-    @Field(key: "duration") var duration: Int
-    @Field(key: "categories") var categories: String
-    @Field(key: "isActive") var isActive: Bool
+    @ID(custom: "id") public var id: ObjectId?
+    @Field(key: "name") public var name: String
+    @OptionalField(key: "imageUrl") public var imageUrl: String?
+    @Field(key: "duration") public var duration: Int
+    @Field(key: "categories") public var categories: String
+    @Field(key: "isActive") public var isActive: Bool
 
-    @Children(for: \.$event) var geolocations: [GeoLocation]
+    @Children(for: \.$event) public var geolocations: [GeoLocation]
     
-    @Parent(key: "owner") var owner: User
-    @Parent(key: "conversation") var conversation: Conversation
+    @Parent(key: "owner") public var owner: User
+    @Parent(key: "conversation") public var conversation: Conversation
     
-    @Timestamp(key: "createdAt", on: .create) var createdAt: Date?
-    @Timestamp(key: "updatedAt", on: .update) var updatedAt: Date?
-    @Timestamp(key: "deletedAt", on: .delete) var deletedAt: Date?
+    @Timestamp(key: "createdAt", on: .create) public var createdAt: Date?
+    @Timestamp(key: "updatedAt", on: .update) public var updatedAt: Date?
+    @Timestamp(key: "deletedAt", on: .delete) public var deletedAt: Date?
     
+}
+
+public struct CUEvent: Content {
+    var name: String
+    var imageUrl: String?
+    var duration: Int
+    var categories: String
+    var ownerId: ObjectId?
+    var conversationId: ObjectId?
 }

@@ -10,21 +10,21 @@ import Vapor
 import Fluent
 import FluentMongoDriver
 
-final class Conversation: Model, Content {
+public final class Conversation: Model, Content {
     
-    static var schema = "conversations"
+    public static var schema = "conversations"
     
-    init() {}
+    public init() {}
     
-    init(title: String) {
+    public init(title: String) {
         self.title = title
     }
 
-    @ID(custom: "id") var id: ObjectId?
-    @Field(key: "title") var title: String
+    @ID(custom: "id") public var id: ObjectId?
+    @Field(key: "title") public var title: String
 
-    @Children(for: \.$conversation) var conversation: [Event]
-    @Children(for: \.$conversation) var chatMessages: [Message]
+    @Children(for: \.$conversation) public var conversation: [Event]
+    @Children(for: \.$conversation) public var chatMessages: [Message]
     
     @Siblings(through: UserConversation.self, from: \.$conversation, to: \.$member)
     public var members: [User]
@@ -32,11 +32,11 @@ final class Conversation: Model, Content {
     @Siblings(through: UserConversation.self, from: \.$conversation, to: \.$admin)
     public var admins: [User]
     
-    @Timestamp(key: "createdAt", on: .create) var createdAt: Date?
-    @Timestamp(key: "updatedAt", on: .update) var updatedAt: Date?
-    @Timestamp(key: "deletedAt", on: .delete) var deletedAt: Date?
+    @Timestamp(key: "createdAt", on: .create) public var createdAt: Date?
+    @Timestamp(key: "updatedAt", on: .update) public var updatedAt: Date?
+    @Timestamp(key: "deletedAt", on: .delete) public var deletedAt: Date?
     
-    func addUser(userId: ObjectId, req: Request) {
+    public func addUser(userId: ObjectId, req: Request) {
         User.find(userId, on: req.db)
             .unwrap(or: Abort(.notFound, reason: "Cant find user") )
             .flatMap { user in
@@ -48,21 +48,19 @@ final class Conversation: Model, Content {
 
 }
 
-struct ChatConversation: Codable {
-    var id: ObjectId
-    var title: String
-    var members: Set<User>?
-    var admins: Set<User>?
-    var messages: [Message]?
-    
-    let createdAt: Date?
-    let updatedAt: Date?
+public struct ChatConversation: Codable {
+    public var id: ObjectId
+    public var title: String
+    public var members: Set<User>?
+    public var admins: Set<User>?
+    public var messages: [Message]?
+    public let createdAt, updatedAt: Date?
 }
 
-struct ConversationWithKids: Content {
-    let id: ObjectId?
-    let title: String
-    let admins: [User.Response]
-    let members: [User.Response]
-    let lastMessage: Message.Item?
+public struct ConversationWithKids: Content {
+    public let id: ObjectId?
+    public let title: String
+    public let admins: [User.Response]
+    public let members: [User.Response]
+    public let lastMessage: Message.Item?
 }

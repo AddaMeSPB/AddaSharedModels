@@ -10,35 +10,35 @@ import Vapor
 import Fluent
 import FluentMongoDriver
 
-final class BlockList: Model {
+public final class BlockList: Model {
     
-    static var schema = "block_lists"
+    public static var schema = "block_lists"
     
-    init() {}
+    public init() {}
     
-    init(id: ObjectId?, ownerID: ObjectId, blockUserIDs: Set<[ObjectId]>) {
+    public init(id: ObjectId?, ownerID: ObjectId, blockUserIDs: Set<[ObjectId]>) {
         self.id = id
         self.ownerID = ownerID
         self.blockUserIDs = blockUserIDs
     }
     
-    @ID(custom: "id") var id: ObjectId?
-    @Field(key: "ownerId") var ownerID: ObjectId
-    @Field(key: "blockUserIds") var blockUserIDs: Set<[ObjectId]>
+    @ID(custom: "id") public var id: ObjectId?
+    @Field(key: "ownerId") public var ownerID: ObjectId
+    @Field(key: "blockUserIds") public var blockUserIDs: Set<[ObjectId]>
 
-    @Timestamp(key: "createdAt", on: .create) var createdAt: Date?
-    @Timestamp(key: "updatedAt", on: .update) var updatedAt: Date?
-    @Timestamp(key: "deletedAt", on: .delete) var deletedAt: Date?
+    @Timestamp(key: "createdAt", on: .create) public var createdAt: Date?
+    @Timestamp(key: "updatedAt", on: .update) public var updatedAt: Date?
+    @Timestamp(key: "deletedAt", on: .delete) public var deletedAt: Date?
     
 }
 
 extension BlockList: Content {
-    var response: Res {
+    public var response: Res {
        .init(self)
     }
     
-    struct Res: Codable {
-        init(_ blockList: BlockList) {
+    public struct Res: Codable {
+        public init(_ blockList: BlockList) {
             if blockList.id == nil {
                 self.id = ObjectId().hexString
             } else {
@@ -52,11 +52,11 @@ extension BlockList: Content {
         }
         
             
-        var id: String
-        var userID: ObjectId
-        var blockUserIDs: Set<[ObjectId]>
-        var createdAt: Date?
-        var updatedAt: Date?
-        var deletedAt: Date?
+        public var id: String
+        public var userID: ObjectId
+        public var blockUserIDs: Set<[ObjectId]>
+        public var createdAt: Date?
+        public var updatedAt: Date?
+        public var deletedAt: Date?
     }
 }
