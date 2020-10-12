@@ -15,7 +15,7 @@ public final class Event: Model, Content {
 
     public init() {}
     
-    init(id: ObjectId? = nil, name: String, imageUrl: String? = nil, duration: Int, categories: String, isActive: Bool, ownerId: User.IDValue, conversationId: Conversation.IDValue) {
+    public init(id: ObjectId? = nil, name: String, imageUrl: String? = nil, duration: Int, categories: String, isActive: Bool, ownerId: User.IDValue, conversationId: Conversation.IDValue) {
         self.id = id
         self.name = name
         self.imageUrl = imageUrl
@@ -45,10 +45,10 @@ public final class Event: Model, Content {
 }
 
 public struct CUEvent: Content {
-    var name: String
-    var imageUrl: String?
-    var duration: Int
-    var categories: String
-    var ownerId: ObjectId?
-    var conversationId: ObjectId?
+    public var name: String
+    public var imageUrl: String?
+    public var duration: Int
+    public var categories: String
+    public var ownerId: ObjectId?
+    public var conversationId: ObjectId?
 }
