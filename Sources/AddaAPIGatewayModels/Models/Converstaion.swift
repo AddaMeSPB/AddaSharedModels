@@ -58,6 +58,14 @@ public struct ChatConversation: Codable {
 }
 
 public struct ConversationWithKids: Content {
+    internal init(id: ObjectId?, title: String, admins: [User.Response], members: [User.Response], lastMessage: Message.Item?) {
+        self.id = id
+        self.title = title
+        self.admins = admins
+        self.members = members
+        self.lastMessage = lastMessage
+    }
+    
     public let id: ObjectId?
     public let title: String
     public let admins: [User.Response]
