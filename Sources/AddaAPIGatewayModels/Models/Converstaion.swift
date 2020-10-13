@@ -58,9 +58,9 @@ public struct ChatConversation: Codable {
 }
 
 public struct ConversationWithKids: Content {
-    let id: ObjectId?
-    let title: String
-    let admins: [User.Response]
-    let members: [User.Response]
-    let lastMessage: Message.Item?
+    public let id: ObjectId?
+    public let title: String
+    public let admins: [User.Response]
+    public let members: [User.Response]
+    public let lastMessage: Message.Item?
 }
