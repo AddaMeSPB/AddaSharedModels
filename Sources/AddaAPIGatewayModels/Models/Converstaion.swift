@@ -58,7 +58,7 @@ public struct ChatConversation: Codable {
 }
 
 public struct ConversationWithKids: Content {
-    public init(id: ObjectId?, title: String, admins: [User.Response], members: [User.Response], lastMessage: Message.Item?) {
+    public init(id: ObjectId?, title: String, admins: [User], members: [User], lastMessage: Message.Item?) {
         self.id = id
         self.title = title
         self.admins = admins
@@ -68,7 +68,7 @@ public struct ConversationWithKids: Content {
     
     public let id: ObjectId?
     public let title: String
-    public let admins: [User.Response]
-    public let members: [User.Response]
+    public let admins: [User]
+    public let members: [User]
     public let lastMessage: Message.Item?
 }

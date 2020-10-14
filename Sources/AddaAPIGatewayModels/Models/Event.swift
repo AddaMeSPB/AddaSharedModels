@@ -35,13 +35,49 @@ public final class Event: Model, Content {
 
     @Children(for: \.$event) public var geolocations: [GeoLocation]
     
-    @Parent(key: "owner") public var owner: User
-    @Parent(key: "conversation") public var conversation: Conversation
+    @Parent(key: "ownerId") public var owner: User
+    @Parent(key: "conversationId") public var conversation: Conversation
     
     @Timestamp(key: "createdAt", on: .create) public var createdAt: Date?
     @Timestamp(key: "updatedAt", on: .update) public var updatedAt: Date?
     @Timestamp(key: "deletedAt", on: .delete) public var deletedAt: Date?
     
+}
+
+extension Event {
+    
+    public var response: Item {
+        .init(self)
+    }
+    
+    public struct Item: Content {
+        public init(_ event: Event) {
+            self.id = event.id
+            self.name = event.name
+            self.imageUrl = event.imageUrl
+            self.duration = event.duration
+            self.categories = event.categories
+            self.owner = event.owner
+            self.conversation = event.conversation
+            self.geoLocations = event.geolocations
+            self.isActive = event.isActive
+            self.createdAt = event.createdAt
+            self.updatedAt = event.updatedAt
+            self.deletedAt = event.deletedAt
+        }
+        
+        
+        public var id: ObjectId?
+        public var name: String
+        public var imageUrl: String?
+        public var duration: Int
+        public var categories: String
+        public var geoLocations: [GeoLocation]
+        public var owner: User?
+        public var conversation: Conversation?
+        public var isActive: Bool
+        public let updatedAt, createdAt, deletedAt: Date?
+    }
 }
 
 public struct CUEvent: Content {
@@ -51,4 +87,5 @@ public struct CUEvent: Content {
     public var categories: String
     public var ownerId: ObjectId?
     public var conversationId: ObjectId?
+    public var isActive: Bool
 }

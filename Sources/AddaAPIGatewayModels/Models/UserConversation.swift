@@ -16,8 +16,8 @@ public final class UserConversation: Model {
     @ID(custom: "id") public var id: ObjectId?
     
     //@Parent(key: "user_id") var user: User
-    @Parent(key: "member") public var member: User
-    @Parent(key: "admin") public var admin: User
+    @Parent(key: "memberId") public var member: User
+    @Parent(key: "adminId") public var admin: User
     @Parent(key: "conversationId")  public var conversation: Conversation
 
     public init() { }
