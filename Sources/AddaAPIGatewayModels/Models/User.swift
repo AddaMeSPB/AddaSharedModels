@@ -16,6 +16,10 @@ public final class User: Model, Content, Hashable {
 
     public init() {}
     
+    public init(_ phoneNumber: String) {
+        self.phoneNumber = phoneNumber
+    }
+    
     @ID(custom: "id") public var id: ObjectId?
     @Field(key: "phoneNumber") public var phoneNumber: String
     
