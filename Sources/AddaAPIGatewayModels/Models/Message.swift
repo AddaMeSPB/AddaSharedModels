@@ -44,8 +44,8 @@ public final class Message: Model {
     @Field(key: "isDelivered") public var isDelivered: Bool
     
     @Parent(key: "conversationId") public var conversation: Conversation
-    @OptionalParent(key: "sender") public var sender: User?
-    @OptionalParent(key: "recipient") public var recipient: User?
+    @OptionalParent(key: "senderId") public var sender: User?
+    @OptionalParent(key: "recipientId") public var recipient: User?
     
     @Timestamp(key: "createdAt", on: .create) public var createdAt: Date?
     @Timestamp(key: "updatedAt", on: .update) public var updatedAt: Date?
@@ -78,8 +78,8 @@ extension Message {
         public let messageBody: String
         public let messageType: MessageType
         public let isRead, isDelivered: Bool
-        public let sender: User.Response?
-        public let recipient: User.Response?
+        public let sender: User?
+        public let recipient: User?
         public let conversationId: ObjectId
         public let updatedAt, createdAt, deletedAt: Date?
     }
