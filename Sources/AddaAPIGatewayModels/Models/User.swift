@@ -16,8 +16,11 @@ public final class User: Model, Content, Hashable {
 
     public init() {}
     
-    public init(_ phoneNumber: String) {
+    public init(id: ObjectId? = nil ,phoneNumber: String) {
+        self.id = id
         self.phoneNumber = phoneNumber
+        self.firstName = nil
+        self.lastName = nil
     }
     
     @ID(custom: "id") public var id: ObjectId?
