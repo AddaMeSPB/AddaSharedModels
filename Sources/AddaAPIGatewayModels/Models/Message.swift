@@ -63,8 +63,8 @@ extension Message {
         public init(_ message: Message) {
             self.id = message.id
             self.conversationId = message.$conversation.id
-            self.sender = message.sender?.response
-            self.recipient = message.recipient?.response
+            self.sender = message.sender
+            self.recipient = message.recipient
             self.messageBody = message.messageBody
             self.messageType = message.messageType
             self.isRead = message.isRead
