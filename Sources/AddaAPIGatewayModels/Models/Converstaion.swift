@@ -58,12 +58,14 @@ public struct ChatConversation: Codable {
 }
 
 public struct ConversationWithKids: Content {
-    public init(id: ObjectId?, title: String, admins: [User], members: [User], lastMessage: Message.Item?) {
+    public init(id: ObjectId?, title: String, admins: [User], members: [User], lastMessage: Message.Item?, createdAt: Date, updatedAt: Date) {
         self.id = id
         self.title = title
         self.admins = admins
         self.members = members
         self.lastMessage = lastMessage
+        self.createdAt = createdAt
+        self.updatedAt = updatedAt
     }
     
     public let id: ObjectId?
@@ -71,4 +73,5 @@ public struct ConversationWithKids: Content {
     public let admins: [User]
     public let members: [User]
     public let lastMessage: Message.Item?
+    public let createdAt, updatedAt: Date?
 }
