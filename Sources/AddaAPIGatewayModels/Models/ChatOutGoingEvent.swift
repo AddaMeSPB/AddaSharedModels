@@ -38,10 +38,10 @@ public enum ChatOutGoingEvent: Encodable, Decodable {
             let message = try container.decode(ChatMessage.self, forKey: .message)
             self = .message(message)
         case "connect":
-            let connect =  try container.decode(ChatConversation.self, forKey: .conversation)
+            let connect =  try container.decode(User.Response.self, forKey: .conversation)
             self = .connect(connect)
         case "disconnect":
-            let disconnect = try container.decode(ChatConversation.self, forKey: .conversation)
+            let disconnect = try container.decode(User.Response.self, forKey: .conversation)
             self = .disconnect(disconnect)
         case "notice":
             let notice = try container.decode(String.self, forKey: .message)
