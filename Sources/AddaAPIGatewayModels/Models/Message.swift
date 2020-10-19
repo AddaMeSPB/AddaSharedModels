@@ -29,8 +29,8 @@ public final class Message: Model {
     
     public init(_ chatMessage: ChatMessage, senderId: User.IDValue? = nil, receipientId: User.IDValue? = nil) {
         self.$conversation.id =  ObjectId(chatMessage.conversationId)!
-        self.$sender.id = senderId
-        self.$recipient.id = receipientId
+        self.$sender.id = chatMessage.sender?.id
+        self.$recipient.id = chatMessage.recipient?.id
         self.messageBody = chatMessage.messageBody
         self.messageType = chatMessage.messageType
         self.isRead = chatMessage.isRead

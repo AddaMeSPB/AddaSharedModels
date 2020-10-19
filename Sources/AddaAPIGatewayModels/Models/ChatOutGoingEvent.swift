@@ -16,8 +16,8 @@ private let jsonEncoder: JSONEncoder = {
 public enum ChatOutGoingEvent: Encodable, Decodable {
     
     case message(ChatMessage)
-    case connect(ChatConversation)
-    case disconnect(ChatConversation)
+    case connect(User.Response)
+    case disconnect(User.Response)
     case notice(String)
     case error(String)
     

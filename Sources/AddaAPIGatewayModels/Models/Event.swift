@@ -89,3 +89,4 @@ public struct CUEvent: Content {
     public var conversationId: ObjectId?
     public var isActive: Bool
 }
+
