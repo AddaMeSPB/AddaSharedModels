@@ -35,10 +35,10 @@ public final class User: Model, Content, Hashable {
     @Children(for: \.$recipient) public var recipient: [Message]
 
     @Siblings(through: UserConversation.self, from: \.$member, to: \.$conversation)
-    public var members: [Conversation]
+    public var membersConversaions: [Conversation]
 
     @Siblings(through: UserConversation.self, from: \.$admin, to: \.$conversation)
-    public var admins: [Conversation]
+    public var adminsConversations: [Conversation]
 
     @Timestamp(key: "createdAt", on: .create) public var createdAt: Date?
     @Timestamp(key: "updatedAt", on: .update) public var updatedAt: Date?
@@ -75,6 +75,8 @@ extension User {
         public var id: ObjectId?
         public var firstName, lastName, email: String?
         public var phoneNumber: String
+        public var adminsConversations: [Conversation]?
+        public var membersConversaions: [Conversation]?
         public var createdAt, updatedAt, deletedAt: Date?
     }
 }

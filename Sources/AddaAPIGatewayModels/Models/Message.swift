@@ -15,20 +15,9 @@ public final class Message: Model {
     public static var schema = "messages"
     
     public init() {}
-    
-//    init(messageItem: Item) {
-//        self.id = ObjectId(messageItem.id)
-//        self.$conversation.id = messageItem.conversationId
-//        self.sender = messageItem.sender
-//        self.recipient = messageItem.recipient
-//        self.messageBody = messageItem.messageBody
-//        self.messageType = messageItem.messageType
-//        self.isRead = messageItem.isRead
-//        self.isDelivered = messageItem.isDelivered
-//    }
-    
-    public init(_ chatMessage: ChatMessage, senderId: User.IDValue? = nil, receipientId: User.IDValue? = nil) {
-        self.$conversation.id =  ObjectId(chatMessage.conversationId)!
+        
+    public init(_ chatMessage: Item, senderId: User.IDValue? = nil, receipientId: User.IDValue? = nil) {
+        self.$conversation.id =  chatMessage.conversationId
         self.$sender.id = chatMessage.sender?.id
         self.$recipient.id = chatMessage.recipient?.id
         self.messageBody = chatMessage.messageBody
@@ -58,7 +47,7 @@ extension Message {
         .init(self)
     }
     
-    public struct Item: Content, Codable {
+    public struct Item: Content, Hashable {
         
         public init(_ message: Message) {
             self.id = message.id
@@ -82,38 +71,10 @@ extension Message {
         public let recipient: User?
         public let conversationId: ObjectId
         public let updatedAt, createdAt, deletedAt: Date?
-    }
-}
-
-
-public struct ChatMessage: Codable, Identifiable, Hashable {
-    public var id: ObjectId?
-    public var conversationId: String
-    public var sender: User?
-    public var recipient: User?
-    public var messageBody: String
-    public var messageType: MessageType
-    public var isRead: Bool
-    public var isDelivered: Bool
-
-    public var createdAt, updatedAt, deletedAt: Date?
-    
-    public init(_ message: Message) {
-        self.id = message.id
-        self.conversationId = message.conversation.id?.hexString ?? ""
-        self.sender = message.sender ?? User.init()
-        self.recipient = message.recipient
-        self.messageBody = message.messageBody
-        self.messageType = message.messageType
-        self.isRead = message.isRead
-        self.isDelivered = message.isDelivered
-        self.createdAt = message.createdAt
-        self.updatedAt = message.updatedAt
-        self.deletedAt = message.deletedAt
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-        hasher.combine(messageBody)
+        
+        public func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+            hasher.combine(messageBody)
+        }
     }
 }

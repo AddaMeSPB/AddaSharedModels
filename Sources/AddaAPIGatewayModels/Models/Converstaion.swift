@@ -23,8 +23,8 @@ public final class Conversation: Model, Content {
     @ID(custom: "id") public var id: ObjectId?
     @Field(key: "title") public var title: String
 
-    @Children(for: \.$conversation) public var conversation: [Event]
-    @Children(for: \.$conversation) public var chatMessages: [Message]
+    @Children(for: \.$conversation) public var events: [Event]
+    @Children(for: \.$conversation) public var messages: [Message]
     
     @Siblings(through: UserConversation.self, from: \.$conversation, to: \.$member)
     public var members: [User]
@@ -46,15 +46,6 @@ public final class Conversation: Model, Content {
             }
     }
 
-}
-
-public struct ChatConversation: Codable {
-    public var id: ObjectId
-    public var title: String
-    public var members: Set<User>?
-    public var admins: Set<User>?
-    public var messages: [Message]?
-    public let createdAt, updatedAt: Date?
 }
 
 public struct ConversationWithKids: Content {
