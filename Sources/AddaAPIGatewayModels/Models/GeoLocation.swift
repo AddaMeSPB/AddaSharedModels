@@ -11,7 +11,7 @@ import Fluent
 import FluentMongoDriver
 
 public final class GeoLocation: Model, Content {
-    public static var schema = "geo_locations"
+    public static var schema = "geolocations"
 
     public init() {}
     
@@ -38,6 +38,13 @@ public final class GeoLocation: Model, Content {
 
 extension GeoLocation {
     
+    public struct Create: Content {
+        public var eventId: ObjectId
+        public var addressName: String
+        public var type: GeoType
+        public var coordinates: [Double]
+    }
+    
     public var response: Item {
         .init(self)
     }
@@ -45,7 +52,7 @@ extension GeoLocation {
     public struct Item: Content {
         internal init(_ geoLocation: GeoLocation) {
             self.id = geoLocation.id
-            self.event = geoLocation.event
+            self.eventId = geoLocation.$event.id
             self.addressName = geoLocation.addressName
             self.type = geoLocation.type
             self.coordinates = geoLocation.coordinates
@@ -55,7 +62,7 @@ extension GeoLocation {
         }
         
         public var id: ObjectId?
-        public var event: Event
+        public var eventId: ObjectId
         public var addressName: String
         public var type: GeoType
         public var coordinates: [Double]
