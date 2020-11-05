@@ -11,7 +11,7 @@ import Fluent
 import FluentMongoDriver
 
 public final class GeoLocation: Model, Content {
-    public static var schema = "geolocations"
+    public static var schema = "geo_locations"
 
     public init() {}
     
