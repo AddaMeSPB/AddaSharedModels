@@ -8,5 +8,5 @@
 import Foundation
 
 public enum MessageType: String, Codable {
-    case text, image, audio, video
+  case text, image, audio, video
 }

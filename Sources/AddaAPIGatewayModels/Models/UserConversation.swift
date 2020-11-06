@@ -11,21 +11,21 @@ import Fluent
 import FluentMongoDriver
 
 public final class UserConversation: Model {
-    public static let schema = "user_conversation_pivot"
-    
-    @ID(custom: "id") public var id: ObjectId?
-    
-    //@Parent(key: "user_id") var user: User
-    @Parent(key: "memberId") public var member: User
-    @Parent(key: "adminId") public var admin: User
-    @Parent(key: "conversationId")  public var conversation: Conversation
-
-    public init() { }
-    
-    public init(id: ObjectId? = nil, user: User, conversation: Conversation) throws {
-        self.id = id
-        self.$member.id = try user.requireID()
-        self.$admin.id = try user.requireID()
-        self.$conversation.id = try conversation.requireID()
-    }
+  public static let schema = "user_conversation_pivot"
+  
+  @ID(custom: "id") public var id: ObjectId?
+  
+  //@Parent(key: "user_id") var user: User
+  @Parent(key: "memberId") public var member: User
+  @Parent(key: "adminId") public var admin: User
+  @Parent(key: "conversationId")  public var conversation: Conversation
+  
+  public init() { }
+  
+  public init(id: ObjectId? = nil, user: User, conversation: Conversation) throws {
+    self.id = id
+    self.$member.id = try user.requireID()
+    self.$admin.id = try user.requireID()
+    self.$conversation.id = try conversation.requireID()
+  }
 }
