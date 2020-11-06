@@ -56,7 +56,7 @@ public final class User: Model, Content, Hashable {
 extension User {
   
   public var amConversations: [Conversation] {
-    return self.adminsConversations + self.membersConversaions
+    return self.adminConversations + self.memberConversaions
   }
   
   public var response: Response {
