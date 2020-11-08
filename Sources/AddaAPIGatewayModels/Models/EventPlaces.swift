@@ -66,7 +66,7 @@ extension EventPlace {
     public var type: GeoType
     public var coordinates: [Double]
     
-    func swapCoordinatesForMongoDB() -> [Double] {
+    public func swapCoordinatesForMongoDB() -> [Double] {
       return [coordinates[1], coordinates[0]]
     }
   }
