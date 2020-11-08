@@ -21,7 +21,7 @@ public final class EventPlace: Model, Content {
     geoType: GeoType,
     coordinates: [Double],
     image: String?,
-    details: String?,
+    details: String? = nil,
     sponsored: Bool? = false,
     overlay: Bool? = false,
     eventID: Event.IDValue
@@ -30,6 +30,10 @@ public final class EventPlace: Model, Content {
     self.addressName = addressName
     self.coordinates = coordinates
     self.type = geoType
+    self.image = image
+    self.details = details
+    self.sponsored = sponsored
+    self.overlay = overlay
     self.$event.id = eventID
   }
   
