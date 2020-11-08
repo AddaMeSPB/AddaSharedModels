@@ -33,7 +33,7 @@ public final class Event: Model, Content {
   @Field(key: "categories") public var categories: String
   @Field(key: "isActive") public var isActive: Bool
   
-  @Children(for: \.$event) public var geolocations: [GeoLocation]
+  @Children(for: \.$event) public var eventPlaces: [EventPlace]
   
   @Parent(key: "ownerId") public var owner: User
   @Parent(key: "conversationId") public var conversation: Conversation
@@ -59,7 +59,7 @@ extension Event {
       self.categories = event.categories
       self.owner = event.owner
       self.conversation = event.conversation
-      self.geoLocations = event.geolocations.map { $0.response }
+      self.eventPlaces = event.eventPlaces.map { $0.response }
       self.isActive = event.isActive
       self.createdAt = event.createdAt
       self.updatedAt = event.updatedAt
@@ -72,7 +72,7 @@ extension Event {
     public var imageUrl: String?
     public var duration: Int
     public var categories: String
-    public var geoLocations: [GeoLocation.Item]
+    public var eventPlaces: [EventPlace.Item]
     public var owner: User?
     public var conversation: Conversation?
     public var isActive: Bool

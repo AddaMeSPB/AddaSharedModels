@@ -1,5 +1,5 @@
 //
-//  GeoLocation.swift
+//  EventPlaces.swift
 //  
 //
 //  Created by Saroar Khandoker on 12.10.2020.
@@ -10,12 +10,22 @@ import Vapor
 import Fluent
 import FluentMongoDriver
 
-public final class GeoLocation: Model, Content {
-  public static var schema = "geo_locations"
+public final class EventPlace: Model, Content {
+  public static var schema = "event_places"
   
   public init() {}
   
-  public init(id: ObjectId? = nil, addressName: String, coordinates: [Double], geoType: GeoType, eventID: Event.IDValue) {
+  public init(
+    id: ObjectId? = nil,
+    addressName: String,
+    geoType: GeoType,
+    coordinates: [Double],
+    image: String?,
+    details: String?,
+    sponsored: Bool? = false,
+    overlay: Bool? = false,
+    eventID: Event.IDValue
+  ) {
     self.id = id
     self.addressName = addressName
     self.coordinates = coordinates
@@ -27,6 +37,10 @@ public final class GeoLocation: Model, Content {
   @Field(key: "addressName") public var addressName: String
   @Field(key: "type") public var type: GeoType
   @Field(key: "coordinates") public var coordinates: [Double]
+  @Field(key: "image") public var image: String?
+  @Field(key: "details") public var details: String?
+  @Field(key: "sponsored") public var sponsored: Bool?
+  @Field(key: "overlay") public var overlay: Bool?
   
   @Parent(key: "eventId") public var event: Event
   
@@ -36,13 +50,21 @@ public final class GeoLocation: Model, Content {
   
 }
 
-extension GeoLocation {
+extension EventPlace {
   
   public struct Create: Content {
     public var eventId: ObjectId
     public var addressName: String
+    public var image: String?
+    public var details: String?
+    public var sponsored: Bool?
+    public var overlay: Bool?
     public var type: GeoType
     public var coordinates: [Double]
+    
+    func swapCoordinatesForMongoDB() -> [Double] {
+      return [coordinates[1], coordinates[0]]
+    }
   }
   
   public var response: Item {
@@ -50,24 +72,29 @@ extension GeoLocation {
   }
   
   public struct Item: Content {
-    internal init(_ geoLocation: GeoLocation) {
-      self.id = geoLocation.id
-      self.eventId = geoLocation.$event.id
-      self.addressName = geoLocation.addressName
-      self.type = geoLocation.type
+    internal init(_ eventPlace: EventPlace) {
+      self.id = eventPlace.id
+      self.eventId = eventPlace.$event.id
+      self.addressName = eventPlace.addressName
+      self.type = eventPlace.type
       // when send coordinate from server it [long, lat] as mongoDB requre
       // when send back to ios send back ios formate [lat, long]
-      self.coordinates = [geoLocation.coordinates[1], geoLocation.coordinates[0]]
-      self.updatedAt = geoLocation.updatedAt
-      self.createdAt = geoLocation.createdAt
-      self.deletedAt = geoLocation.deletedAt
+      self.coordinates = [eventPlace.coordinates[1], eventPlace.coordinates[0]]
+      self.updatedAt = eventPlace.updatedAt
+      self.createdAt = eventPlace.createdAt
+      self.deletedAt = eventPlace.deletedAt
     }
     
     public var id: ObjectId?
     public var eventId: ObjectId
     public var addressName: String
+    public var image: String?
+    public var details: String?
+    public var sponsored: Bool?
+    public var overlay: Bool?
     public var type: GeoType
     public var coordinates: [Double]
+    
     public var updatedAt, createdAt, deletedAt: Date?
   }
 }
