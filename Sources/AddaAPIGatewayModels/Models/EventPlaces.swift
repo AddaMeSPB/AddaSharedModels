@@ -81,6 +81,10 @@ extension EventPlace {
       self.eventId = eventPlace.$event.id
       self.addressName = eventPlace.addressName
       self.type = eventPlace.type
+      self.image = eventPlace.image
+      self.details = eventPlace.details
+      self.sponsored = eventPlace.sponsored
+      self.overlay = eventPlace.overlay
       // when send coordinate from server it [long, lat] as mongoDB requre
       // when send back to ios send back ios formate [lat, long]
       self.coordinates = [eventPlace.coordinates[1], eventPlace.coordinates[0]]
