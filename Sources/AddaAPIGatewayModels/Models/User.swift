@@ -16,11 +16,13 @@ public final class User: Model, Content, Hashable {
   
   public init() {}
   
-  public init(id: ObjectId? = nil ,phoneNumber: String) {
+  public init(id: ObjectId? = nil, phoneNumber: String, firstName: String? = nil, lastName: String? = nil, avatar: String? = "", email: String? = nil) {
     self.id = id
     self.phoneNumber = phoneNumber
-    self.firstName = nil
-    self.lastName = nil
+    self.firstName = firstName
+    self.lastName = lastName
+    self.avatar = avatar
+    self.email = email
   }
   
   @ID(custom: "id") public var id: ObjectId?
@@ -28,11 +30,13 @@ public final class User: Model, Content, Hashable {
   
   @OptionalField(key: "firstName") public var firstName: String?
   @OptionalField(key: "lastName") public var lastName: String?
+  @OptionalField(key: "avatar") public var avatar: String?
   @OptionalField(key: "email") public var email: String?
   
-  @Children(for: \.$owner) public var event: [Event]
-  @Children(for: \.$sender) public var sender: [Message]
-  @Children(for: \.$recipient) public var recipient: [Message]
+  @Children(for: \.$owner) public var events: [Event]
+  @Children(for: \.$sender) public var senders: [Message]
+  @Children(for: \.$recipient) public var recipients: [Message]
+  @Children(for: \.$user) public var contacts: [Contact]
   
   @Siblings(through: UserConversation.self, from: \.$member, to: \.$conversation)
   public var memberConversaions: [Conversation]
@@ -69,6 +73,7 @@ extension User {
       self.id = user.id
       self.firstName = user.firstName
       self.lastName = user.lastName
+      self.avatar = user.avatar
       self.email = user.email
       self.phoneNumber = user.phoneNumber
       
@@ -78,7 +83,7 @@ extension User {
     }
     
     public var id: ObjectId?
-    public var firstName, lastName, email: String?
+    public var firstName, lastName, email, avatar: String?
     public var phoneNumber: String
     public var adminsConversations: [Conversation]?
     public var membersConversaions: [Conversation]?
