@@ -46,8 +46,8 @@ public final class Conversation: Model, Content {
     User.find(userId, on: req.db)
       .unwrap(or: Abort(.notFound, reason: "Cant find member or admin user") )
       .flatMap { user in
-        self.$admins.attach(user, on: req.db).flatMap {
-          self.$members.attach(user, on: req.db)
+        self.$admins.attach(user, method: .ifNotExists, on: req.db).flatMap {
+          self.$members.attach(user, method: .ifNotExists, on: req.db)
         }
       }
   }
@@ -55,11 +55,37 @@ public final class Conversation: Model, Content {
   public func addUserAsAMember(userId: ObjectId, req: Request) {
     User.find(userId, on: req.db)
       .unwrap(or: Abort(.notFound, reason: "Cant find member user") )
-      .flatMap { user in
-         self.$members.attach(user, on: req.db)
-      }
+      .map { self.$members.attach($0, method: .ifNotExists, on: req.db) }
   }
   
+  public func addUserAsAAdmin(adminUserID: ObjectId, req: Request) {
+    User.find(adminUserID, on: req.db)
+      .unwrap(or: Abort(.notFound, reason: "Cant find member user") )
+      .map { self.$admins.attach($0, method: .ifNotExists, on: req.db) }
+  }
+  
+  public func addMemberToOneToOneConversationBy(phoneNumber: String, req: Request) {
+    User.query(on: req.db)
+        .filter(\.$phoneNumber == phoneNumber)
+        .first()
+        .unwrap(or: Abort(.notFound, reason: "Cant find member user") )
+        .map { self.$members.attach($0, method: .ifNotExists, on: req.db) }
+  }
+  
+//  public func addMembersToOneToOneConversation(adminUserID: ObjectId, phoneNumber: String ,req: Request) {
+//   let adminUser = User.find(adminUserID, on: req.db)
+//      .unwrap(or: Abort(.notFound, reason: "Cant find member user") )
+//      .map { (user: User?) -> User in return user! }
+//
+//   let opponentUser =  User.query(on: req.db)
+//        .filter(\.$phoneNumber == phoneNumber)
+//        .first()
+//        .unwrap(or: Abort(.notFound, reason: "Cant find member user") )
+//        .map { (user: User?) -> User in return user! }
+//
+//    UserConversation.init(member: opponentUser, admin: adminUser, conversation: self)
+//  }
+//
 }
 
 public struct ConversationWithKids: Content {
@@ -86,5 +112,5 @@ public struct ConversationWithKids: Content {
 public struct CreateConversation: Content {
   public let title: String
   public let type: ConversationType
-  public let memberId: String
+  public let opponentPhoneNumber: String
 }

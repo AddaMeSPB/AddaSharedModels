@@ -22,10 +22,10 @@ public final class UserConversation: Model {
   
   public init() { }
   
-  public init(id: ObjectId? = nil, user: User, conversation: Conversation) throws {
+  public init(id: ObjectId? = nil, member: User, admin: User, conversation: Conversation) throws {
     self.id = id
-    self.$member.id = try user.requireID()
-    self.$admin.id = try user.requireID()
+    self.$member.id = try member.requireID()
+    self.$admin.id = try admin.requireID()
     self.$conversation.id = try conversation.requireID()
   }
 }
