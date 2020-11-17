@@ -44,7 +44,7 @@ public final class Conversation: Model, Content {
   
   public func addUserAsAMemberAndAdmin(userId: ObjectId, req: Request) {
     User.find(userId, on: req.db)
-      .unwrap(or: Abort(.notFound, reason: "Cant find member or admin user") )
+      .unwrap(or: Abort(.notFound, reason: "Cant find member or admin by userID \(userId)") )
       .flatMap { user in
         self.$admins.attach(user, method: .ifNotExists, on: req.db).flatMap {
           self.$members.attach(user, method: .ifNotExists, on: req.db)
@@ -54,13 +54,13 @@ public final class Conversation: Model, Content {
   
   public func addUserAsAMember(userId: ObjectId, req: Request) {
     User.find(userId, on: req.db)
-      .unwrap(or: Abort(.notFound, reason: "Cant find member user") )
+      .unwrap(or: Abort(.notFound, reason: "Cant find user member from id: \(userId)") )
       .map { self.$members.attach($0, method: .ifNotExists, on: req.db) }
   }
   
   public func addUserAsAAdmin(adminUserID: ObjectId, req: Request) {
     User.find(adminUserID, on: req.db)
-      .unwrap(or: Abort(.notFound, reason: "Cant find member user") )
+      .unwrap(or: Abort(.notFound, reason: "Cant find user admin from id: \(adminUserID)") )
       .map { self.$admins.attach($0, method: .ifNotExists, on: req.db) }
   }
   
@@ -68,7 +68,7 @@ public final class Conversation: Model, Content {
     User.query(on: req.db)
         .filter(\.$phoneNumber == phoneNumber)
         .first()
-        .unwrap(or: Abort(.notFound, reason: "Cant find member user") )
+        .unwrap(or: Abort(.notFound, reason: "Cant find user member from phoneNumber: \(phoneNumber)") )
         .map { self.$members.attach($0, method: .ifNotExists, on: req.db) }
   }
 

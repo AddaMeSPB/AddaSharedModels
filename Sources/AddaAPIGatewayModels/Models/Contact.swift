@@ -35,9 +35,9 @@ public final class Contact: Model, Content {
   @Timestamp(key: "createdAt", on: .create) public var createdAt: Date?
   @Timestamp(key: "updatedAt", on: .update) public var updatedAt: Date?
   @Timestamp(key: "deletedAt", on: .delete) public var deletedAt: Date?
-
+  
   public var response: ReqRes {
-      .init(self)
+    .init(self)
   }
   
   public struct ReqRes: Content {
@@ -51,13 +51,13 @@ public final class Contact: Model, Content {
       self.userId = contact.$user.id
     }
     
-      public var id: ObjectId?
-      public var identifier: String?
-      public var phoneNumber: String
-      public var fullName: String?
-      public var avatar: String?
-      public var isRegister: Bool?
-      public var userId: ObjectId
+    public var id: ObjectId?
+    public var identifier: String?
+    public var phoneNumber: String
+    public var fullName: String?
+    public var avatar: String?
+    public var isRegister: Bool?
+    public var userId: ObjectId
     
   }
   
