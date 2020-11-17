@@ -71,21 +71,7 @@ public final class Conversation: Model, Content {
         .unwrap(or: Abort(.notFound, reason: "Cant find member user") )
         .map { self.$members.attach($0, method: .ifNotExists, on: req.db) }
   }
-  
-//  public func addMembersToOneToOneConversation(adminUserID: ObjectId, phoneNumber: String ,req: Request) {
-//   let adminUser = User.find(adminUserID, on: req.db)
-//      .unwrap(or: Abort(.notFound, reason: "Cant find member user") )
-//      .map { (user: User?) -> User in return user! }
-//
-//   let opponentUser =  User.query(on: req.db)
-//        .filter(\.$phoneNumber == phoneNumber)
-//        .first()
-//        .unwrap(or: Abort(.notFound, reason: "Cant find member user") )
-//        .map { (user: User?) -> User in return user! }
-//
-//    UserConversation.init(member: opponentUser, admin: adminUser, conversation: self)
-//  }
-//
+
 }
 
 public struct ConversationWithKids: Content {
