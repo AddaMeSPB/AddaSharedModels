@@ -37,7 +37,6 @@ public final class User: Model, Content, Hashable {
   @Children(for: \.$sender) public var senders: [Message]
   @Children(for: \.$recipient) public var recipients: [Message]
   @Children(for: \.$user) public var contacts: [Contact]
-  
   @Children(for: \.$user) public var attachments: [Attachment]
   
   @Siblings(through: UserConversation.self, from: \.$member, to: \.$conversation)
@@ -78,7 +77,7 @@ extension User {
       self.avatar = user.avatar
       self.email = user.email
       self.phoneNumber = user.phoneNumber
-      
+      self.attachments = user.attachments.map { $0.response }
       self.createdAt = user.createdAt
       self.updatedAt = user.updatedAt
       self.deletedAt = user.deletedAt
@@ -87,6 +86,7 @@ extension User {
     public var id: ObjectId?
     public var firstName, lastName, email, avatar: String?
     public var phoneNumber: String
+    public var attachments: [Attachment.ReqRes]?
     public var adminsConversations: [Conversation]?
     public var membersConversaions: [Conversation]?
     public var createdAt, updatedAt, deletedAt: Date?
