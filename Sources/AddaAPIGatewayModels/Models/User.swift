@@ -38,6 +38,8 @@ public final class User: Model, Content, Hashable {
   @Children(for: \.$recipient) public var recipients: [Message]
   @Children(for: \.$user) public var contacts: [Contact]
   
+  @Children(for: \.$user) public var attachments: [Attachment]
+  
   @Siblings(through: UserConversation.self, from: \.$member, to: \.$conversation)
   public var memberConversaions: [Conversation]
   
