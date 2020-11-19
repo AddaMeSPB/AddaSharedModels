@@ -43,15 +43,15 @@ public final class Attachment: Model, Content {
   @Timestamp(key: "updatedAt", on: .update) public var updatedAt: Date?
   @Timestamp(key: "deletedAt", on: .delete) public var deletedAt: Date?
   
-  
+  public struct Create {
+    public var id: String
+    public var type: AttachmentType
+    public var userId: User?
+    public var imageUrlString: String?
+    public var audioUrlString: String?
+    public var videoUrlString: String?
+    public var fileUrlString: String?
+  }
+
 }
 
-public struct CUAttachment {
-  public var id: String
-  public var type: AttachmentType
-  public var userId: User?
-  public var imageUrlString: String?
-  public var audioUrlString: String?
-  public var videoUrlString: String?
-  public var fileUrlString: String?
-}
