@@ -66,19 +66,21 @@ public final class Contact: Model, Content {
 extension Contact: Hashable {
   public func hash(into hasher: inout Hasher) {
     hasher.combine(phoneNumber)
+    hasher.combine(isRegister)
   }
   
   public static func ==(lhs: Contact, rhs: Contact) -> Bool {
-    return lhs.phoneNumber == rhs.phoneNumber
+    return lhs.phoneNumber == rhs.phoneNumber && lhs.isRegister == rhs.isRegister
   }
 }
 
 extension Contact.ReqRes: Hashable {
   public func hash(into hasher: inout Hasher) {
     hasher.combine(phoneNumber)
+    hasher.combine(isRegister)
   }
   
-  public static func ==(lhs: Contact.ReqRes, rhs: Contact.ReqRes) -> Bool {
-    return lhs.phoneNumber == rhs.phoneNumber
+  public static func ==(lhs: Contact, rhs: Contact) -> Bool {
+    return lhs.phoneNumber == rhs.phoneNumber && lhs.isRegister == rhs.isRegister
   }
 }
