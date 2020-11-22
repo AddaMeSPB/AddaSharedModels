@@ -80,7 +80,7 @@ extension Contact.ReqRes: Hashable {
     hasher.combine(isRegister)
   }
   
-  public static func ==(lhs: Contact, rhs: Contact) -> Bool {
+  public static func ==(lhs: Contact.ReqRes, rhs: Contact.ReqRes) -> Bool {
     return lhs.phoneNumber == rhs.phoneNumber && lhs.isRegister == rhs.isRegister
   }
 }
