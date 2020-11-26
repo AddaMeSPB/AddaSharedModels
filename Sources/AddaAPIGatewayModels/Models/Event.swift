@@ -133,7 +133,7 @@ extension Event {
       self.sponsored = event.sponsored
       self.overlay = event.overlay
       
-      //db.events.updateMany({}, [{ $set: { addressName: "", details: "if you want you explain about your event" type: "Point", coordinates: [29.873706166262373, 60.26134045287572], sponsored: false, overlay: false } }])
+//      db.events.updateMany({}, [{ $set: { addressName: "", details: "if you want you explain about your event", type: "Point", coordinates: [29.873706166262373, 60.26134045287572], sponsored: false, overlay: false } }])
             
       self.createdAt = event.createdAt
       self.updatedAt = event.updatedAt
@@ -242,3 +242,15 @@ public struct CUEvent: Content {
   public var conversationsId: ObjectId?
 }
 
+public enum GeoType: String {
+  case Point
+  case LineString
+  case Polygon
+  case MultiPoint
+  case MultiLineString
+  case MultiPolygon
+  case GeometryCollection
+}
+
+extension GeoType: Encodable {}
+extension GeoType: Decodable {}
