@@ -33,10 +33,11 @@ public final class User: Model, Content, Hashable {
   @OptionalField(key: "avatar") public var avatar: String?
   @OptionalField(key: "email") public var email: String?
   
+  @Children(for: \.$user) public var contacts: [Contact]
+  @Children(for: \.$user) public var devices: [Device]
   @Children(for: \.$owner) public var events: [Event]
   @Children(for: \.$sender) public var senders: [Message]
   @Children(for: \.$recipient) public var recipients: [Message]
-  @Children(for: \.$user) public var contacts: [Contact]
   @Children(for: \.$user) public var attachments: [Attachment]
   
   @Siblings(through: UserConversation.self, from: \.$member, to: \.$conversation)

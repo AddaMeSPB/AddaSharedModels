@@ -32,6 +32,7 @@ public final class Contact: Model, Content {
   @Field(key: "avatar") public var avatar: String?
   @Field(key: "isRegister") public var isRegister: Bool?
   @Parent(key: "userId") public var user: User
+  
   @Timestamp(key: "createdAt", on: .create) public var createdAt: Date?
   @Timestamp(key: "updatedAt", on: .update) public var updatedAt: Date?
   @Timestamp(key: "deletedAt", on: .delete) public var deletedAt: Date?
@@ -41,7 +42,7 @@ public final class Contact: Model, Content {
   }
   
   public struct ReqRes: Content {
-    internal init(_ contact: Contact) {
+    public init(_ contact: Contact) {
       self.id = contact.id
       self.identifier = contact.identifier
       self.phoneNumber = contact.phoneNumber
