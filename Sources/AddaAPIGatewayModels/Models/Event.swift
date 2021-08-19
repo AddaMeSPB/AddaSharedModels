@@ -17,7 +17,9 @@ public final class Event: Model, Content {
   
   public init(
     id: ObjectId? = nil, name: String, details: String? = nil,
-    imageUrl: String? = nil, duration: Int, categories: String,
+    imageUrl: String? = nil, duration: Int, distance: Double? = nil,
+    categories: String,
+
     isActive: Bool, addressName: String,
     geoType: GeoType, coordinates: [Double],
     sponsored: Bool? = false, overlay: Bool? = false,
@@ -28,6 +30,7 @@ public final class Event: Model, Content {
     self.details = details
     self.imageUrl = imageUrl
     self.duration = duration
+    self.distance = distance
     self.categories = categories
     self.isActive = isActive
     
@@ -67,6 +70,7 @@ public final class Event: Model, Content {
   @OptionalField(key: "details") public var details: String?
   @OptionalField(key: "imageUrl") public var imageUrl: String?
   @Field(key: "duration") public var duration: Int
+  @Field(key: "distance") public var distance: Double?
   @Field(key: "categories") public var categories: String
   @Field(key: "isActive") public var isActive: Bool
   
@@ -93,12 +97,19 @@ extension Event {
   }
   
   public struct Item: Content {
-    public init(_id: ObjectId? = nil, name: String, details: String? = nil, imageUrl: String? = nil, duration: Int, isActive: Bool, conversationsId: ObjectId, categories: String, addressName: String, sponsored: Bool? = nil, overlay: Bool? = nil, type: GeoType, coordinates: [Double], updatedAt: Date?, createdAt: Date?, deletedAt: Date?) {
+    public init(
+      _id: ObjectId? = nil, name: String, details: String? = nil,
+      imageUrl: String? = nil, duration: Int, distance: Double? = nil, isActive: Bool,
+      conversationsId: ObjectId, categories: String, addressName: String,
+      sponsored: Bool? = nil, overlay: Bool? = nil, type: GeoType,
+      coordinates: [Double], updatedAt: Date?, createdAt: Date?, deletedAt: Date?
+    ) {
       self._id = _id
       self.name = name
       self.details = details
       self.imageUrl = imageUrl
       self.duration = duration
+      self.distance = distance
       self.isActive = isActive
       self.conversationsId = conversationsId
       self.categories = categories
@@ -113,7 +124,7 @@ extension Event {
     }
     
     public var recreateEventWithSwapCoordinatesForMongoDB: Event.Item {
-      .init(_id: _id, name: name, details: details, imageUrl: imageUrl, duration: duration, isActive: isActive, conversationsId: conversationsId, categories: categories, addressName: addressName, sponsored: sponsored, overlay: overlay, type: type, coordinates: swapCoordinatesForMongoDB(), updatedAt: updatedAt, createdAt: createdAt, deletedAt: deletedAt)
+      .init(_id: _id, name: name, details: details, imageUrl: imageUrl, duration: duration, distance: distance, isActive: isActive, conversationsId: conversationsId, categories: categories, addressName: addressName, sponsored: sponsored, overlay: overlay, type: type, coordinates: swapCoordinatesForMongoDB(), updatedAt: updatedAt, createdAt: createdAt, deletedAt: deletedAt)
     }
     
     public init(_ event: Event) {
@@ -122,6 +133,7 @@ extension Event {
       self.details = event.details
       self.imageUrl = event.imageUrl
       self.duration = event.duration
+      self.distance = event.distance
       self.categories = event.categories
       self.isActive = event.isActive
       self.conversationsId = event.$conversation.id
@@ -145,6 +157,7 @@ extension Event {
     public var details: String?
     public var imageUrl: String?
     public var duration: Int
+    public let distance: Double?
     public var isActive: Bool
     public var categories: String
     public var conversationsId: ObjectId
