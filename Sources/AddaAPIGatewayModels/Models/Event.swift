@@ -70,7 +70,7 @@ public final class Event: Model, Content {
   @OptionalField(key: "details") public var details: String?
   @OptionalField(key: "imageUrl") public var imageUrl: String?
   @Field(key: "duration") public var duration: Int
-  @Field(key: "distance") public var distance: Double?
+  @OptionalField(key: "distance") public var distance: Double?
   @Field(key: "categories") public var categories: String
   @Field(key: "isActive") public var isActive: Bool
   
