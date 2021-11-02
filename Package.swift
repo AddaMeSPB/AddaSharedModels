@@ -17,8 +17,8 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/vapor/vapor.git", from: "4.48.3"),
-        .package(url: "https://github.com/vapor/fluent.git", from: "4.3.1"),
+        .package(url: "https://github.com/vapor/vapor.git", from: "4.51.1"),
+        .package(url: "https://github.com/vapor/fluent.git", from: "4.4.0"),
         .package(url: "https://github.com/vapor/fluent-mongo-driver.git", from: "1.0.2")
     ],
     targets: [

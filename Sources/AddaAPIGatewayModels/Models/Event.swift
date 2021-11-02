@@ -91,20 +91,20 @@ public final class Event: Model, Content {
 }
 
 extension Event {
-  
+
   public var response: Item {
     .init(self)
   }
   
   public struct Item: Content {
     public init(
-      _id: ObjectId? = nil, name: String, details: String? = nil,
+      id: ObjectId? = nil, name: String, details: String? = nil,
       imageUrl: String? = nil, duration: Int, distance: Double? = nil, isActive: Bool,
       conversationsId: ObjectId, categories: String, addressName: String,
       sponsored: Bool? = nil, overlay: Bool? = nil, type: GeoType,
       coordinates: [Double], updatedAt: Date?, createdAt: Date?, deletedAt: Date?
     ) {
-      self._id = _id
+      self._id = id
       self.name = name
       self.details = details
       self.imageUrl = imageUrl
@@ -124,7 +124,7 @@ extension Event {
     }
     
     public var recreateEventWithSwapCoordinatesForMongoDB: Event.Item {
-      .init(_id: _id, name: name, details: details, imageUrl: imageUrl, duration: duration, distance: distance, isActive: isActive, conversationsId: conversationsId, categories: categories, addressName: addressName, sponsored: sponsored, overlay: overlay, type: type, coordinates: swapCoordinatesForMongoDB(), updatedAt: updatedAt, createdAt: createdAt, deletedAt: deletedAt)
+      .init(id: _id, name: name, details: details, imageUrl: imageUrl, duration: duration, distance: distance, isActive: isActive, conversationsId: conversationsId, categories: categories, addressName: addressName, sponsored: sponsored, overlay: overlay, type: type, coordinates: swapCoordinatesForMongoDB(), updatedAt: updatedAt, createdAt: createdAt, deletedAt: deletedAt)
     }
     
     public init(_ event: Event) {
@@ -175,10 +175,8 @@ extension Event {
       return [coordinates[1], coordinates[0]]
     }
   }
-  
- 
-}
 
+}
 
 public struct EventPage: Content {
     /// The page's items. Usually models.
