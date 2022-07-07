@@ -43,7 +43,7 @@ public final class Conversation: Model, Content {
   @Timestamp(key: "deletedAt", on: .delete) public var deletedAt: Date?
   
   public func addUserAsAMemberAndAdmin(userId: ObjectId, req: Request) {
-    User.find(userId, on: req.db)
+    _ = User.find(userId, on: req.db)
       .unwrap(or: Abort(.notFound, reason: "Cant find member or admin by userID \(userId)") )
       .flatMap { user in
         self.$admins.attach(user, method: .ifNotExists, on: req.db).flatMap {
@@ -53,19 +53,19 @@ public final class Conversation: Model, Content {
   }
   
   public func addUserAsAMember(userId: ObjectId, req: Request) {
-    User.find(userId, on: req.db)
+    _ = User.find(userId, on: req.db)
       .unwrap(or: Abort(.notFound, reason: "Cant find user member from id: \(userId)") )
       .map { self.$members.attach($0, method: .ifNotExists, on: req.db) }
   }
   
   public func addUserAsAAdmin(adminUserID: ObjectId, req: Request) {
-    User.find(adminUserID, on: req.db)
+    _ = User.find(adminUserID, on: req.db)
       .unwrap(or: Abort(.notFound, reason: "Cant find user admin from id: \(adminUserID)") )
       .map { self.$admins.attach($0, method: .ifNotExists, on: req.db) }
   }
   
   public func addMemberToOneToOneConversationBy(phoneNumber: String, req: Request) {
-    User.query(on: req.db)
+    _ = User.query(on: req.db)
         .filter(\.$phoneNumber == phoneNumber)
         .first()
         .unwrap(or: Abort(.notFound, reason: "Cant find user member from phoneNumber: \(phoneNumber)") )
@@ -96,7 +96,18 @@ public struct ConversationWithKids: Content {
 }
 
 public struct CreateConversation: Content {
-  public let title: String
-  public let type: ConversationType
-  public let opponentPhoneNumber: String
+    public let title: String
+    public let type: ConversationType
+    public let opponentPhoneNumber: String
+    
+    public init(
+        title: String,
+        type: ConversationType,
+        opponentPhoneNumber: String
+    ) {
+        self.title = title
+        self.type = type
+        self.opponentPhoneNumber = opponentPhoneNumber
+    }
 }
+

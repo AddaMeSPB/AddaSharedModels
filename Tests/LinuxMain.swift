@@ -3,5 +3,5 @@ import XCTest
 import AddaAPIGatewayModelsTests
 
 var tests = [XCTestCaseEntry]()
-tests += AddaAPIGatewayModelsTests.allTests()
+tests += AddaSharedModelsTests.allTests()
 XCTMain(tests)
