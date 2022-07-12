@@ -47,7 +47,7 @@ public final class Device: Model, Content {
   }
   
   public struct RequestResponse: Content {
-    public init(id: ObjectId? = nil, ownerId: ObjectId, name: String, model: String? = nil, osVersion: String? = nil, token: String, voipToken: String, createdAt: Date? = nil, updatedAt: Date? = nil) {
+    public init(id: ObjectId? = nil, ownerId: ObjectId? = nil, name: String, model: String? = nil, osVersion: String? = nil, token: String, voipToken: String, createdAt: Date? = nil, updatedAt: Date? = nil) {
       self._id = id
       self.ownerId = ownerId
       self.name = name
@@ -73,7 +73,7 @@ public final class Device: Model, Content {
     }
     
     public var _id: ObjectId?
-    public var ownerId: ObjectId
+    public var ownerId: ObjectId?
     public var name: String
     public var model: String?
     public var osVersion: String?
