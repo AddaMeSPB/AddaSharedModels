@@ -95,3 +95,13 @@ extension User {
 }
 
 
+extension User {
+    func oneToOneConversastionTitle() -> String {
+        let fName = self.firstName ?? ""
+        let lName = self.lastName ?? ""
+        
+       return self.firstName == nil && self.lastName == nil
+        ? self.phoneNumber
+        : fName + " " + lName
+    }
+}

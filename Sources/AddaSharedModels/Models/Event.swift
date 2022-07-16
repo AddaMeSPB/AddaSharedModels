@@ -18,12 +18,12 @@ public final class Event: Model, Content {
   public init(
     id: ObjectId? = nil, name: String, details: String? = nil,
     imageUrl: String? = nil, duration: Int, distance: Double? = nil,
-    categories: String,
 
     isActive: Bool, addressName: String,
     geoType: GeoType, coordinates: [Double],
     sponsored: Bool? = false, overlay: Bool? = false,
-    ownerId: User.IDValue, conversationsId: Conversation.IDValue
+    ownerId: User.IDValue, conversationsId: Conversation.IDValue,
+    categoriesId: Category.IDValue
   ) {
     self.id = id
     self.name = name
@@ -31,7 +31,6 @@ public final class Event: Model, Content {
     self.imageUrl = imageUrl
     self.duration = duration
     self.distance = distance
-    self.categories = categories
     self.isActive = isActive
     
     // Place information
@@ -43,14 +42,14 @@ public final class Event: Model, Content {
     
     self.$owner.id = ownerId
     self.$conversation.id = conversationsId
+    self.$category.id = categoriesId
   }
   
-  public init(content: CUEvent, ownerID: ObjectId, conversationsID: ObjectId) {
+    public init(content: CUEvent, ownerID: ObjectId, conversationsID: ObjectId, categoriesID: ObjectId) {
     self.name = content.name
     self.details = content.details
     self.imageUrl = content.imageUrl
     self.duration = content.duration
-    self.categories = content.categories
     self.isActive = content.isActive
     
     // Place information
@@ -62,6 +61,7 @@ public final class Event: Model, Content {
     
     self.$owner.id = ownerID
     self.$conversation.id = conversationsID
+    self.$category.id = categoriesID
 
   }
   
@@ -71,7 +71,6 @@ public final class Event: Model, Content {
   @OptionalField(key: "imageUrl") public var imageUrl: String?
   @Field(key: "duration") public var duration: Int
   @OptionalField(key: "distance") public var distance: Double?
-  @Field(key: "categories") public var categories: String
   @Field(key: "isActive") public var isActive: Bool
   
   // Place information
@@ -83,6 +82,7 @@ public final class Event: Model, Content {
 
   @Parent(key: "ownerId") public var owner: User
   @Parent(key: "conversationsId") public var conversation: Conversation
+  @Parent(key: "categoriesId") public var category: Category
   
   @Timestamp(key: "createdAt", on: .create) public var createdAt: Date?
   @Timestamp(key: "updatedAt", on: .update) public var updatedAt: Date?
@@ -100,7 +100,7 @@ extension Event {
     public init(
       id: ObjectId? = nil, name: String, details: String? = nil,
       imageUrl: String? = nil, duration: Int, distance: Double? = nil, isActive: Bool,
-      conversationsId: ObjectId, categories: String, addressName: String,
+      conversationsId: ObjectId, categoriesId: ObjectId, addressName: String,
       sponsored: Bool? = nil, overlay: Bool? = nil, type: GeoType,
       coordinates: [Double], updatedAt: Date?, createdAt: Date?, deletedAt: Date?
     ) {
@@ -112,7 +112,7 @@ extension Event {
       self.distance = distance
       self.isActive = isActive
       self.conversationsId = conversationsId
-      self.categories = categories
+      self.categoriesId = categoriesId
       self.addressName = addressName
       self.sponsored = sponsored
       self.overlay = overlay
@@ -124,7 +124,7 @@ extension Event {
     }
     
     public var recreateEventWithSwapCoordinatesForMongoDB: Event.Item {
-      .init(id: _id, name: name, details: details, imageUrl: imageUrl, duration: duration, distance: distance, isActive: isActive, conversationsId: conversationsId, categories: categories, addressName: addressName, sponsored: sponsored, overlay: overlay, type: type, coordinates: swapCoordinatesForMongoDB(), updatedAt: updatedAt, createdAt: createdAt, deletedAt: deletedAt)
+      .init(id: _id, name: name, details: details, imageUrl: imageUrl, duration: duration, distance: distance, isActive: isActive, conversationsId: conversationsId, categoriesId: categoriesId, addressName: addressName, sponsored: sponsored, overlay: overlay, type: type, coordinates: swapCoordinatesForMongoDB(), updatedAt: updatedAt, createdAt: createdAt, deletedAt: deletedAt)
     }
     
     public init(_ event: Event) {
@@ -134,9 +134,9 @@ extension Event {
       self.imageUrl = event.imageUrl
       self.duration = event.duration
       self.distance = event.distance
-      self.categories = event.categories
       self.isActive = event.isActive
       self.conversationsId = event.$conversation.id
+      self.categoriesId = event.$category.id
       
       // Place information
       self.addressName = event.addressName
@@ -159,7 +159,7 @@ extension Event {
     public var duration: Int
     public let distance: Double?
     public var isActive: Bool
-    public var categories: String
+    public var categoriesId: ObjectId
     public var conversationsId: ObjectId
     
     // Place Information
@@ -240,7 +240,6 @@ public struct CUEvent: Content {
   public var details: String?
   public var imageUrl: String?
   public var duration: Int
-  public var categories: String
   public var isActive: Bool
   
   public var addressName: String
@@ -251,6 +250,7 @@ public struct CUEvent: Content {
   
   public var ownerId: ObjectId?
   public var conversationsId: ObjectId?
+  public var categoriesId: ObjectId?
 }
 
 public enum GeoType: String {

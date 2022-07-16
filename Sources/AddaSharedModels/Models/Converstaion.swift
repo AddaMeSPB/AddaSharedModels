@@ -20,7 +20,7 @@ public final class Conversation: Model, Content {
   
   public init() {}
   
-  public init(title: String, type: ConversationType) {
+    public init(id: ObjectId? = nil, title: String, type: ConversationType) {
     self.title = title
     self.type = type
   }
