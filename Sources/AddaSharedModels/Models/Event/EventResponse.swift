@@ -1,6 +1,6 @@
+
 import Foundation
 import MongoKitten
-import CoreLocation
 import MapKit
 
 public struct EventInput {
