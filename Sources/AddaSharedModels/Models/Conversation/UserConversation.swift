@@ -6,6 +6,8 @@
 //
 
 import Foundation
+
+#if os(macOS)
 import Vapor
 import Fluent
 import FluentMongoDriver
@@ -39,14 +41,5 @@ public final class UserConversation: Model {
     }
 }
 
-extension UserConversation {
-    func title(_ user: User, conversation: Conversation) -> String {
-        if conversation.id == self.conversation.id {
-            return user.id == member.id
-            ? member.oneToOneConversastionTitle()
-            : user.oneToOneConversastionTitle()
-        } else {
-            return conversation.title
-        }
-    }
-}
+#endif
+

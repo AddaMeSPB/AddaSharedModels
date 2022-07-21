@@ -15,10 +15,10 @@ private let jsonEncoder: JSONEncoder = {
 
 public enum ChatOutGoingEvent: Encodable, Decodable {
   
-  case connect(User.Response)
-  case disconnect(User.Response)
-  case conversation(Message.Item)
-  case message(Message.Item)
+  case connect(UserOutput)
+  case disconnect(UserOutput)
+  case conversation(MessageItem)
+  case message(MessageItem)
   case notice(String)
   case error(String)
   
@@ -36,16 +36,16 @@ public enum ChatOutGoingEvent: Encodable, Decodable {
     
     switch type {
     case "connect":
-      let connect =  try container.decode(User.Response.self, forKey: .user)
+      let connect =  try container.decode(UserOutput.self, forKey: .user)
       self = .connect(connect)
     case "disconnect":
-      let disconnect = try container.decode(User.Response.self, forKey: .user)
+      let disconnect = try container.decode(UserOutput.self, forKey: .user)
       self = .disconnect(disconnect)
     case "message":
-      let message = try container.decode(Message.Item.self, forKey: .message)
+      let message = try container.decode(MessageItem.self, forKey: .message)
       self = .message(message)
     case "conversation":
-      let conversation = try container.decode(Message.Item.self, forKey: .conversation)
+      let conversation = try container.decode(MessageItem.self, forKey: .conversation)
       self = .conversation(conversation)
     case "notice":
       let notice = try container.decode(String.self, forKey: .message)

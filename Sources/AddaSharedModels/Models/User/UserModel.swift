@@ -1,16 +1,10 @@
-//
-//  User.swift
-//  
-//
-//  Created by Saroar Khandoker on 12.10.2020.
-//
 
-import Foundation
+#if os(macOS)
 import Vapor
 import Fluent
 import FluentMongoDriver
 
-public final class User: Model, Content, Hashable {
+public final class User: Model, Hashable {
   
   public static var schema = "users"
   
@@ -21,7 +15,6 @@ public final class User: Model, Content, Hashable {
     self.phoneNumber = phoneNumber
     self.firstName = firstName
     self.lastName = lastName
-    self.avatar = avatar
     self.email = email
   }
   
@@ -30,7 +23,6 @@ public final class User: Model, Content, Hashable {
   
   @OptionalField(key: "firstName") public var firstName: String?
   @OptionalField(key: "lastName") public var lastName: String?
-  @OptionalField(key: "avatar") public var avatar: String?
   @OptionalField(key: "email") public var email: String?
   
   @Children(for: \.$user) public var contacts: [Contact]
@@ -50,50 +42,25 @@ public final class User: Model, Content, Hashable {
   @Timestamp(key: "updatedAt", on: .update) public var updatedAt: Date?
   @Timestamp(key: "deletedAt", on: .delete) public var deletedAt: Date?
   
-  public func hash(into hasher: inout Hasher) {
-    hasher.combine(id)
-  }
-  
-  public static func == (lhs: User, rhs: User) -> Bool {
-    lhs.id == rhs.id
-  }
 }
 
 extension User {
-  
+    public func hash(into hasher: inout Hasher) {
+      hasher.combine(id)
+    }
+    
+    public static func == (lhs: User, rhs: User) -> Bool {
+      lhs.id == rhs.id
+    }
+}
+
+extension User {
   public var amConversations: [Conversation] {
     return self.adminConversations + self.memberConversaions
   }
   
-  public var response: Response {
-    .init(self)
-  }
-  
-  public struct Response: Content {
-    
-    public init(_ user: User) {
-      self.id = user.id
-      self.firstName = user.firstName
-      self.lastName = user.lastName
-      self.avatar = user.avatar
-      self.email = user.email
-      self.phoneNumber = user.phoneNumber
-      self.attachments = user.attachments.map { $0.response }
-      self.createdAt = user.createdAt
-      self.updatedAt = user.updatedAt
-      self.deletedAt = user.deletedAt
-    }
-    
-    public var id: ObjectId?
-    public var firstName, lastName, email, avatar: String?
-    public var phoneNumber: String
-    public var attachments: [Attachment.ReqRes]?
-    public var adminsConversations: [Conversation]?
-    public var membersConversaions: [Conversation]?
-    public var createdAt, updatedAt, deletedAt: Date?
-  }
+  public var response: UserOutput { .init(self) }
 }
-
 
 extension User {
     func oneToOneConversastionTitle() -> String {
@@ -105,3 +72,21 @@ extension User {
         : fName + " " + lName
     }
 }
+
+extension UserOutput: Content {}
+
+extension UserOutput {
+    public init(_ user: User) {
+        self.id = user.id
+        self.firstName = user.firstName
+        self.lastName = user.lastName
+        self.email = user.email
+        self.phoneNumber = user.phoneNumber
+        self.attachments = user.attachments.map { $0.response }
+        self.createdAt = user.createdAt
+        self.updatedAt = user.updatedAt
+        self.deletedAt = user.deletedAt
+    }
+}
+
+#endif

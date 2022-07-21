@@ -1,11 +1,5 @@
-//
-//  Message.swift
-//  
-//
-//  Created by Saroar Khandoker on 02.10.2020.
-//
 
-import Foundation
+#if os(macOS) || os(Linux)
 import Vapor
 import Fluent
 import FluentMongoDriver
@@ -16,14 +10,14 @@ public final class Message: Model {
   
   public init() {}
   
-  public init(_ chatMessage: Item, senderId: User.IDValue? = nil, receipientId: User.IDValue? = nil) {
-    self.$conversation.id =  chatMessage.conversationId
-    self.$sender.id = chatMessage.sender?.id
-    self.$recipient.id = chatMessage.recipient?.id
-    self.messageBody = chatMessage.messageBody
-    self.messageType = chatMessage.messageType
-    self.isRead = chatMessage.isRead
-    self.isDelivered = chatMessage.isDelivered
+  public init(_ messageItem: MessageItem, senderId: User.IDValue? = nil, receipientId: User.IDValue? = nil) {
+    self.$conversation.id =  messageItem.conversationId
+    self.$sender.id = messageItem.sender?.id
+    self.$recipient.id = messageItem.recipient?.id
+    self.messageBody = messageItem.messageBody
+    self.messageType = messageItem.messageType
+    self.isRead = messageItem.isRead
+    self.isDelivered = messageItem.isDelivered
   }
   
   @ID(custom: "id") public var id: ObjectId?
@@ -43,17 +37,17 @@ public final class Message: Model {
 }
 
 extension Message {
-  public var response: Item {
-    .init(self)
-  }
-  
-  public struct Item: Content, Hashable {
-    
+  public var response: MessageItem { .init(self) }
+}
+
+extension MessageItem: Content {}
+
+extension MessageItem {
     public init(_ message: Message) {
       self.id = message.id
       self.conversationId = message.$conversation.id
-      self.sender = message.sender
-      self.recipient = message.recipient
+        self.sender = message.sender?.response
+        self.recipient = message.recipient?.response
       self.messageBody = message.messageBody
       self.messageType = message.messageType
       self.isRead = message.isRead
@@ -62,19 +56,6 @@ extension Message {
       self.updatedAt = message.updatedAt
       self.deletedAt = message.deletedAt
     }
-    
-    public let id: ObjectId?
-    public let messageBody: String
-    public let messageType: MessageType
-    public let isRead, isDelivered: Bool
-    public let sender: User?
-    public let recipient: User?
-    public let conversationId: ObjectId
-    public let updatedAt, createdAt, deletedAt: Date?
-    
-    public func hash(into hasher: inout Hasher) {
-      hasher.combine(id)
-      hasher.combine(messageBody)
-    }
-  }
 }
+
+#endif

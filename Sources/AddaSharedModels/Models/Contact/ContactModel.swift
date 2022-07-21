@@ -1,15 +1,9 @@
-//
-//  Contact.swift
-//  
-//
-//  Created by Saroar Khandoker on 12.11.2020.
-//
-
+#if os(macOS) || os(Linux)
 import Vapor
 import Fluent
 import FluentMongoDriver
 
-public final class Contact: Model, Content {
+public final class Contact: Model {
   
   public static var schema = "contacts"
   
@@ -37,11 +31,11 @@ public final class Contact: Model, Content {
   @Timestamp(key: "updatedAt", on: .update) public var updatedAt: Date?
   @Timestamp(key: "deletedAt", on: .delete) public var deletedAt: Date?
   
-  public var response: ReqRes {
-    .init(self)
-  }
-  
-  public struct ReqRes: Content {
+}
+
+extension ContactInOutPut: Content {}
+
+extension ContactInOutPut {
     public init(_ contact: Contact) {
       self.id = contact.id
       self.identifier = contact.identifier
@@ -51,17 +45,6 @@ public final class Contact: Model, Content {
       self.isRegister = contact.isRegister
       self.userId = contact.$user.id
     }
-    
-    public var id: ObjectId?
-    public var identifier: String?
-    public var phoneNumber: String
-    public var fullName: String?
-    public var avatar: String?
-    public var isRegister: Bool?
-    public var userId: ObjectId
-    
-  }
-  
 }
 
 extension Contact: Hashable {
@@ -75,13 +58,8 @@ extension Contact: Hashable {
   }
 }
 
-extension Contact.ReqRes: Hashable {
-  public func hash(into hasher: inout Hasher) {
-    hasher.combine(phoneNumber)
-    hasher.combine(isRegister)
-  }
-  
-  public static func ==(lhs: Contact.ReqRes, rhs: Contact.ReqRes) -> Bool {
-    return lhs.phoneNumber == rhs.phoneNumber && lhs.isRegister == rhs.isRegister
-  }
+extension Contact {
+    public var response: ContactInOutPut { .init(self) }
 }
+
+#endif
