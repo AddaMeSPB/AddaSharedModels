@@ -6,7 +6,6 @@
 //
 
 import MongoKitten
-import CoreData
 
 public struct ContactInOutPut: Codable {
     public init(
