@@ -1,7 +1,6 @@
 
 import Foundation
 import MongoKitten
-import MapKit
 
 public struct EventInput {
     public var id: ObjectId?
@@ -79,7 +78,9 @@ public struct EventResponse: Codable, Identifiable {
     public var overlay: Bool?
     public var type: GeoType
     public var coordinates: [Double]
+    #if os(iOS)
     public var regionRadius: CLLocationDistance? = 1000
+    #endif
     public var url: URL
     
     public var updatedAt, createdAt, deletedAt: Date?

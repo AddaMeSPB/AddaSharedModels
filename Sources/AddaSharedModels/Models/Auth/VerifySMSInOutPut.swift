@@ -8,8 +8,6 @@
 #if os(macOS)
 import Vapor
 import MongoKitten
-import SwiftUI
-import MapKit
 
 extension VerifySMSInOutput: Content {}
 
