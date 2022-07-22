@@ -7,7 +7,6 @@
 
 import Foundation
 import URLRouting
-import DeveloperToolsSupport
 
 public enum CategoriesRoute: Equatable {
     case create(CreateCategory)
