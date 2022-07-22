@@ -33,11 +33,11 @@ public final class Contact: Model {
   
 }
 
-extension ContactInOutPut: Content {}
+extension ContactOutPut: Content {}
 
-extension ContactInOutPut {
+extension ContactOutPut {
     public init(_ contact: Contact) {
-      self.id = contact.id
+      self.id = contact.id ?? ObjectId()
       self.identifier = contact.identifier
       self.phoneNumber = contact.phoneNumber
       self.fullName = contact.fullName
@@ -59,7 +59,9 @@ extension Contact: Hashable {
 }
 
 extension Contact {
-    public var response: ContactInOutPut { .init(self) }
+    public var response: ContactOutPut { .init(self) }
 }
+
+extension MobileNumbersInput: Content {}
 
 #endif

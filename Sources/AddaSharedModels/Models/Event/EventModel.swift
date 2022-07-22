@@ -10,14 +10,24 @@ public final class Event: Model {
     public init() {}
     
     public init(
-        id: ObjectId? = nil, name: String, details: String? = nil,
-        imageUrl: String? = nil, duration: Int, distance: Double? = nil,
+        id: ObjectId? = nil,
+        name: String,
+        details: String? = nil,
+        imageUrl: String? = nil,
+        duration: Int,
+        distance: Double? = nil,
         
-        isActive: Bool, addressName: String,
-        geoType: GeoType, coordinates: [Double],
-        sponsored: Bool? = false, overlay: Bool? = false,
-        ownerId: User.IDValue, conversationsId: Conversation.IDValue,
-        categoriesId: Category.IDValue
+        isActive: Bool,
+        addressName: String,
+        geoType: GeoType,
+        coordinates: [Double],
+        sponsored: Bool? = false,
+        overlay: Bool? = false,
+        ownerId: User.IDValue,
+        conversationsId: Conversation.IDValue,
+        categoriesId: Category.IDValue,
+        
+        urlString: String
     ) {
         self.id = id
         self.name = name
@@ -37,9 +47,15 @@ public final class Event: Model {
         self.$owner.id = ownerId
         self.$conversation.id = conversationsId
         self.$category.id = categoriesId
+        
     }
     
-    public init(content: EventInput, ownerID: ObjectId, conversationsID: ObjectId, categoriesID: ObjectId) {
+    public init(
+        content: EventInput,
+        ownerID: ObjectId,
+        conversationsID: ObjectId,
+        categoriesID: ObjectId
+    ) {
         self.name = content.name
         self.details = content.details
         self.imageUrl = content.imageUrl
@@ -97,13 +113,13 @@ extension Event {
 
     public var response: EventResponse { .init(self) }
  
-    public func update(_ input: EventInput) async throws {
+    public func update(_ input: EventResponse) async throws {
+        id = input.id
         name = input.name
         details = input.details
         imageUrl = input.imageUrl
         duration = input.duration
         isActive = input.isActive
-        owner.id = input.ownerId
         category.id = input.categoriesId
         conversation.id = input.conversationsId
         addressName = input.addressName
@@ -119,7 +135,7 @@ extension EventResponse: Content {}
 
 extension EventResponse {
     public init(_ event: Event) {
-        self._id = event.id
+        self.id = event.id ?? ObjectId()
         self.name = event.name
         self.details = event.details
         self.imageUrl = event.imageUrl
@@ -140,12 +156,9 @@ extension EventResponse {
         self.updatedAt = event.updatedAt
         self.deletedAt = event.deletedAt
         
-        self.url = .empty //request.application.router.url(for: .eventEngine(.events(.event(event.id, .fetch))))
+        self.url = .home
+        //request.application.router.url(for: .eventEngine(.events(.event(event.id, .fetch))))
     }
-}
-
-extension URL {
-    public static var empty: URL = .init(string: "")!
 }
 
 extension EventPage: Content {}

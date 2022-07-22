@@ -10,14 +10,18 @@ public final class Message: Model {
   
   public init() {}
   
-  public init(_ messageItem: MessageItem, senderId: User.IDValue? = nil, receipientId: User.IDValue? = nil) {
+  public init(
+    _ messageItem: MessageItem,
+    senderId: User.IDValue? = nil,
+    receipientId: User.IDValue? = nil
+  ) {
     self.$conversation.id =  messageItem.conversationId
     self.$sender.id = messageItem.sender?.id
     self.$recipient.id = messageItem.recipient?.id
     self.messageBody = messageItem.messageBody
     self.messageType = messageItem.messageType
-    self.isRead = messageItem.isRead
-    self.isDelivered = messageItem.isDelivered
+    self.isRead = messageItem.isRead ?? false
+    self.isDelivered = messageItem.isDelivered ?? false
   }
   
   @ID(custom: "id") public var id: ObjectId?
@@ -44,10 +48,10 @@ extension MessageItem: Content {}
 
 extension MessageItem {
     public init(_ message: Message) {
-      self.id = message.id
+      self.id = message.id ?? ObjectId()
       self.conversationId = message.$conversation.id
-        self.sender = message.sender?.response
-        self.recipient = message.recipient?.response
+      self.sender = message.sender?.response
+      self.recipient = message.recipient?.response
       self.messageBody = message.messageBody
       self.messageType = message.messageType
       self.isRead = message.isRead

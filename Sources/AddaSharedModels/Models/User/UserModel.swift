@@ -1,5 +1,5 @@
 
-#if os(macOS)
+#if os(macOS) || os(Linux)
 import Vapor
 import Fluent
 import FluentMongoDriver
@@ -10,13 +10,32 @@ public final class User: Model, Hashable {
   
   public init() {}
   
-  public init(id: ObjectId? = nil, phoneNumber: String, firstName: String? = nil, lastName: String? = nil, avatar: String? = "", email: String? = nil) {
-    self.id = id
-    self.phoneNumber = phoneNumber
-    self.firstName = firstName
-    self.lastName = lastName
-    self.email = email
-  }
+    public init(
+            id: ObjectId? = nil,
+            phoneNumber: String,
+            firstName: String? = nil,
+            lastName: String? = nil,
+            avatar: String? = "",
+            email: String? = nil,
+            contacts: [Contact] = [],
+            devices: [Device] = [],
+            events: [Event] = [],
+            senders: [Message] = [],
+            recipients: [Message] = [],
+            attachments: [Attachment] = []
+        ) {
+            self.id = id
+            self.phoneNumber = phoneNumber
+            self.firstName = firstName
+            self.lastName = lastName
+            self.email = email
+            self.$contacts.value = contacts
+            self.$devices.value = devices
+            self.$events.value = events
+            self.$senders.value = senders
+            self.$recipients.value = recipients
+            self.$attachments.value = attachments
+        }
   
   @ID(custom: "id") public var id: ObjectId?
   @Field(key: "phoneNumber") public var phoneNumber: String
@@ -86,6 +105,7 @@ extension UserOutput {
         self.createdAt = user.createdAt
         self.updatedAt = user.updatedAt
         self.deletedAt = user.deletedAt
+        self.url = .home
     }
 }
 

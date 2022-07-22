@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MongoKitten
+import BSON
 
 public struct CreateCategory: Codable {
     public let name: String
@@ -18,13 +18,12 @@ public struct CreateCategory: Codable {
 
 extension CreateCategory: Equatable {}
 
-
 public struct CategoryResponse: Codable {
-    public let id: ObjectId?
-    public let name: String
-    public let url: URL
+    public var id: ObjectId
+    public var name: String
+    public var url: URL
     
-    public init(id: ObjectId? = nil, name: String, url: URL) {
+    public init(id: ObjectId, name: String, url: URL) {
         self.id = id
         self.name = name
         self.url = url
@@ -36,11 +35,9 @@ extension CategoryResponse: Equatable {}
 public struct CategoriesResponse: Codable {
 
     public let categories: [CategoryResponse]
-    public let url: URL
     
-    public init(categories: [CategoryResponse], url: URL) {
+    public init(categories: [CategoryResponse]) {
         self.categories = categories
-        self.url = url
     }
 
 }
@@ -48,10 +45,9 @@ public struct CategoriesResponse: Codable {
 extension CategoriesResponse: Equatable {
     public static func == (lhs: CategoriesResponse, rhs: CategoriesResponse) -> Bool {
         return lhs.categories == rhs.categories
-        && lhs.url == rhs.url
     }
 }
-//
+
 //func usersHandler(
 //  request: Request,
 //  route: UsersRoute

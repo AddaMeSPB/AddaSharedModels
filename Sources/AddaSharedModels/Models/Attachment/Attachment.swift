@@ -6,13 +6,13 @@
 //
 
 import Foundation
-import MongoKitten
+import BSON
 
 public enum AttachmentType: String, Codable {
     case file, image, audio, video
 }
 
-public struct AttachmentInOutPut: Codable, Equatable {
+public struct AttachmentInOutPut: Codable {
     
     public var id: ObjectId?
     public var type: AttachmentType
@@ -49,6 +49,9 @@ public struct AttachmentInOutPut: Codable, Equatable {
         self.deletedAt = deletedAt
     }
     
+}
+
+extension AttachmentInOutPut: Equatable {
     public static func < (lhs: AttachmentInOutPut, rhs: AttachmentInOutPut) -> Bool {
         guard let lhsDate = lhs.updatedAt, let rhsDate = rhs.createdAt else { return false }
         return lhsDate > rhsDate

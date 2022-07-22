@@ -1,4 +1,4 @@
-// swift-tools-version:5.5
+// swift-tools-version:5.7
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -17,17 +17,15 @@ let package = Package(
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
-        .package(url: "https://github.com/vapor/vapor.git", from: "4.62.1"),
+        .package(url: "https://github.com/vapor/vapor.git", from: "4.67.1"),
         .package(url: "https://github.com/vapor/fluent.git", from: "4.4.0"),
         .package(url: "https://github.com/vapor/fluent-mongo-driver.git", from: "1.1.2"),
-        .package(url: "https://github.com/orlandos-nl/MongoKitten.git", from: "6.7.0"),
         .package(url: "https://github.com/vapor/jwt.git", from: "4.2.1"),
         
         // Route
         .package(url: "https://github.com/pointfreeco/vapor-routing.git", from: "0.1.1"),
-        .package(url: "https://github.com/pointfreeco/swift-parsing.git", from: "0.9.2"),
-        .package(url: "https://github.com/pointfreeco/swift-url-routing.git", from: "0.3.0"),
+        .package(url: "https://github.com/pointfreeco/swift-url-routing.git", from: "0.3.1"),
+        .package(url: "https://github.com/OpenKitten/BSON.git", from: "7.0.0")
     
     ],
     targets: [
@@ -68,8 +66,8 @@ let package = Package(
                 ),
                 
                 .product(
-                    name: "MongoKitten",
-                    package: "MongoKitten"
+                    name: "BSON",
+                    package: "BSON"
                 )
                 
             ]

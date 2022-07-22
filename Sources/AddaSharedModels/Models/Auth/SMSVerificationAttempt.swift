@@ -5,22 +5,22 @@
 //  Created by Alif on 7/6/20.
 //
 
-#if os(macOS)
+#if os(macOS) || os(Linux)
 import Vapor
 import Fluent
-import FluentMongoDriver
+import BSON
 
-final class SMSVerificationAttempt: Model, Content {
-    static let schema = "sms_verification_attempts"
+public final class SMSVerificationAttempt: Model, Content {
+    static public let schema = "sms_verification_attempts"
     
-    @ID(custom: "id") var id: ObjectId?
-    @Field(key: "expiresAt") var expiresAt: Date?
-    @Field(key: "phoneNumber") var phoneNumber: String
-    @Field(key: "code") var code: String
+    @ID(custom: "id") public var id: ObjectId?
+    @Field(key: "expiresAt") public var expiresAt: Date?
+    @Field(key: "phoneNumber") public var phoneNumber: String
+    @Field(key: "code") public var code: String
     
-    init() { }
+    public init() { }
     
-    init(code: String, expiresAt: Date?, phoneNumber: String) {
+    public init(code: String, expiresAt: Date?, phoneNumber: String) {
         self.code = code
         self.expiresAt = expiresAt
         self.phoneNumber = phoneNumber

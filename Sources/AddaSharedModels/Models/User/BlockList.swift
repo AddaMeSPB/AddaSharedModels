@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MongoKitten
+import BSON
 
 public struct BlockListInoutPut: Codable {
     public init(id: ObjectId? = nil , userID: ObjectId, blockUserIDs: Set<[ObjectId]>, createdAt: Date? = nil, updatedAt: Date? = nil, deletedAt: Date? = nil) {

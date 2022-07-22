@@ -2,7 +2,7 @@
 #if os(macOS) || os(Linux)
 @testable import AddaSharedModels
 import Fluent
-import MongoKitten
+import BSON
 
 extension UserConversation {
     static func create(
@@ -11,7 +11,12 @@ extension UserConversation {
         conversation: Conversation,
         database: Database
     ) throws -> UserConversation {
-        let userConveration = try UserConversation(id: ObjectId(), member: member, admin: admin, conversation: conversation)
+        let userConveration = try UserConversation(
+            id: ObjectId(),
+            member: member,
+            admin: admin,
+            conversation: conversation
+        )
         try userConveration.save(on: database).wait()
         return userConveration
     }

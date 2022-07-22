@@ -2,7 +2,7 @@
 #if os(macOS) || os(Linux)
 @testable import AddaSharedModels
 import Fluent
-import MongoKitten
+import BSON
 
 extension Event {
     public static func create(
@@ -23,13 +23,14 @@ extension Event {
         user: User,
         category: Category,
         conversation: Conversation,
+        urlString: String,
         databse: Database
     ) throws -> Event {        
         let event = Event(
             name: name, details: details, imageUrl: imageUrl, duration: duration,
             distance: nil, isActive: isActive, addressName: addressName, geoType: type,
             coordinates: coordinates, sponsored: sponsored, overlay: overlay,
-            ownerId: user.id!, conversationsId: conversation.id!, categoriesId: category.id!
+            ownerId: user.id!, conversationsId: conversation.id!, categoriesId: category.id!, urlString: urlString
         )
         try event.save(on: databse).wait()
         return event

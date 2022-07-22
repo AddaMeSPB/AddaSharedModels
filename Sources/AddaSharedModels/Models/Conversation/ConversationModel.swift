@@ -42,12 +42,18 @@ public final class Conversation: Model {
     
 }
 
+extension Conversation: Content {}
 extension ConversationOutPut: Content {}
-extension CreateConversation: Content {}
+extension ConversationOutPutOneToOneChat: Content {}
+extension ConversationCreate: Content {}
+
+extension Conversation {
+    public var response: ConversationOutPut { .init(self) }
+}
 
 extension ConversationOutPut {
     public init(_ conversation: Conversation) {
-        id = conversation.id
+        id = conversation.id ?? ObjectId()
         title = conversation.title
         type = conversation.type
         members = conversation.members.map { $0.response }

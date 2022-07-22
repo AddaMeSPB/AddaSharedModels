@@ -7,7 +7,7 @@
 
 import Foundation
 
-#if os(macOS)
+#if os(macOS) || os(Linux)
 import Vapor
 import Fluent
 import FluentMongoDriver
@@ -41,5 +41,16 @@ public final class UserConversation: Model {
     }
 }
 
-#endif
+extension UserConversation {
+    public func title(currentId: ObjectId) -> String {
+        if conversation.type == .oneToOne {
+            return member.id == currentId
+            ? member.oneToOneConversastionTitle()
+            : member.oneToOneConversastionTitle()
+        } else {
+            return conversation.title
+        }
+    }
+}
 
+#endif

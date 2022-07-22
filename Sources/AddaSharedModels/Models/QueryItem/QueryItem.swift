@@ -9,24 +9,15 @@ import Foundation
 
 public struct QueryItem: Codable {
   public init(
-    page: String,
-    per: String,
-    lat: String? = nil,
-    long: String? = nil,
-    distance: String? = nil
+    page: Int = 1,
+    per: Int = 10
   ) {
     self.page = page
     self.per = per
-    self.lat = lat
-    self.long = long
-    self.distance = distance
   }
 
-  public var page: String
-  public var per: String
-  public var lat: String?
-  public var long: String?
-  public var distance: String?
+  public var page: Int = 1
+  public var per: Int = 10
 
   public var parameters: [String: Any] {
     let mirror = Mirror(reflecting: self)
@@ -47,3 +38,5 @@ public struct QueryItem: Codable {
     }
   }
 }
+
+extension QueryItem: Equatable {}

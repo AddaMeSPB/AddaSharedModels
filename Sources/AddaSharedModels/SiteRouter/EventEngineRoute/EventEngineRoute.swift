@@ -7,7 +7,6 @@
 
 import Foundation
 import URLRouting
-import Vapor
 
 public enum EventEngineRoute: Equatable {
     case events(EventsRoute)

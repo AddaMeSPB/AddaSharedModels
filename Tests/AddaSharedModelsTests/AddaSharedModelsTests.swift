@@ -1,7 +1,7 @@
 import XCTest
 @testable import AddaSharedModels
 
-#if os(macOS)
+#if os(macOS) || os(Linux)
 import FluentMongoDriver
 import Fluent
 

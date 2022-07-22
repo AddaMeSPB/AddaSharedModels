@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import MongoKitten
+import BSON
 
 public struct UserOutput: Codable, Equatable, Hashable, Identifiable {
     
@@ -17,7 +17,7 @@ public struct UserOutput: Codable, Equatable, Hashable, Identifiable {
     public var adminsConversations: [ConversationOutPut]?
     public var membersConversaions: [ConversationOutPut]?
     public var createdAt, updatedAt, deletedAt: Date?
-//    public var url: URL
+    public var url: URL
     
     public init(
         id: ObjectId? = nil,
@@ -28,8 +28,10 @@ public struct UserOutput: Codable, Equatable, Hashable, Identifiable {
         attachments: [AttachmentInOutPut]? = nil,
         adminsConversations: [ConversationOutPut]? = nil,
         membersConversaions: [ConversationOutPut]? = nil,
+        url: URL,
         createdAt: Date? = nil,
-        updatedAt: Date? = nil, deletedAt: Date? = nil
+        updatedAt: Date? = nil,
+        deletedAt: Date? = nil
     ) {
         self.id = id
         self.firstName = firstName
@@ -39,6 +41,7 @@ public struct UserOutput: Codable, Equatable, Hashable, Identifiable {
         self.attachments = attachments
         self.adminsConversations = adminsConversations
         self.membersConversaions = membersConversaions
+        self.url = url
         self.createdAt = createdAt
         self.updatedAt = updatedAt
         self.deletedAt = deletedAt
@@ -70,7 +73,7 @@ extension UserOutput {
       }
 
       if fullName.isEmpty {
-        return String(phoneNumber.suffix(4))//hideLast4DigitFromPhoneNumber()
+        return phoneNumber
       }
 
       return fullName

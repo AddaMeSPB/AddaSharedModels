@@ -1,6 +1,7 @@
 #if os(macOS) || os(Linux)
 import Vapor
 import Fluent
+import FluentKit
 import FluentMongoDriver
 
 public final class Category: Model {
@@ -39,12 +40,13 @@ extension CategoryResponse: Content {}
 
 extension CategoryResponse {
     public init(_ category: Category) {
-        self.id = category.id
+        self.id = category.id ?? ObjectId()
         self.name = category.name
-        self.url = .init(string: "https://0.0.0.0:8080/categories/\(category.id!.hexString)") ?? .empty
+        self.url = .home
     }
 }
 
 extension CategoriesResponse: Content {}
+extension Category: Content {}
 
 #endif

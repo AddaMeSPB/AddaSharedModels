@@ -1,7 +1,6 @@
 #if os(macOS) || os(Linux)
 @testable import AddaSharedModels
 import Fluent
-import MongoKitten
 
 extension User {
     public static func create(
