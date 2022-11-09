@@ -284,8 +284,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/pointfreeco/vapor-routing.git",
       "state" : {
-        "revision" : "f07b4d7618bf48b450ed11c9f85b74ba8b9bae6c",
-        "version" : "0.1.1"
+        "revision" : "d16c7f8ab95147862a554045463666ce9faed65e",
+        "version" : "0.1.2"
       }
     },
     {

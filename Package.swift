@@ -23,8 +23,8 @@ let package = Package(
         .package(url: "https://github.com/vapor/jwt.git", from: "4.2.1"),
         
         // Route
-        .package(url: "https://github.com/pointfreeco/vapor-routing.git", from: "0.1.1"),
-        .package(url: "https://github.com/pointfreeco/swift-url-routing.git", from: "0.3.1"),
+        .package(url: "https://github.com/pointfreeco/vapor-routing.git", from: "0.1.2"),
+        .package(url: "https://github.com/pointfreeco/swift-url-routing.git", from: "0.4.0"),
         .package(url: "https://github.com/OpenKitten/BSON.git", from: "7.0.0")
     
     ],
