@@ -27,13 +27,13 @@ public struct MessageItem: Identifiable {
     public var conversationId: ObjectId
     public var messageBody: String
     public var messageType: MessageType
-    public var isRead: Bool? = nil
-    public var isDelivered: Bool? = nil
-    public var sender: UserOutput? = nil
-    public var recipient: UserOutput? = nil
-    public var createdAt: Date? = nil
-    public var updatedAt: Date? = nil
-    public var deletedAt: Date? = nil
+    public var isRead: Bool?
+    public var isDelivered: Bool?
+    public var sender: UserOutput?
+    public var recipient: UserOutput?
+    public var createdAt: Date?
+    public var updatedAt: Date?
+    public var deletedAt: Date?
 
     
     /// INIT
@@ -54,13 +54,13 @@ public struct MessageItem: Identifiable {
         conversationId: ObjectId,
         messageBody: String,
         messageType: MessageType,
-        isRead: Bool? = nil,
-        isDelivered: Bool? = nil,
-        sender: UserOutput? = nil,
-        recipient: UserOutput? = nil,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
-        deletedAt: Date? = nil
+        isRead: Bool?,
+        isDelivered: Bool?,
+        sender: UserOutput?,
+        recipient: UserOutput?,
+        createdAt: Date?,
+        updatedAt: Date?,
+        deletedAt: Date?
     ) {
         self.id = id
         self.conversationId = conversationId
@@ -74,7 +74,6 @@ public struct MessageItem: Identifiable {
         self.updatedAt = updatedAt
         self.deletedAt = deletedAt
     }
-    
     
 }
 

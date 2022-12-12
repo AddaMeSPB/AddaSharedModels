@@ -6,6 +6,7 @@ import BSON
 public enum EventsRoute: Equatable {
     case create(eventInput: EventInput)
     case list(query: EventPageRequest)
+    case findOwnerEvetns(query: QueryItem)
     case update(eventInput: EventResponse)
     
     case find(eventId: String, EventRoute = .find)
@@ -27,6 +28,16 @@ public let eventsRouter = OneOf {
                 Field("lat", default: 59.93572512685927) { Double.parser() }
                 Field("long", default: 30.32722285814234) { Double.parser() }
                 Field("distance", default: 300000.0) { Double.parser() }
+            }
+        }
+    }
+
+    Route(.case(EventsRoute.findOwnerEvetns)) {
+        Path { "my" }
+        Parse(.memberwise(QueryItem.init)) {
+            Query {
+                Field("page", default: 1) { Digits() }
+                Field("per", default: 10) { Digits() }
             }
         }
     }

@@ -8,7 +8,8 @@ public struct ConversationOutPut: Identifiable {
     public var admins: [UserOutput]?
     public var members: [UserOutput]?
     public var lastMessage: MessageItem?
-    public var createdAt, updatedAt, deletedAt: Date?
+    public var createdAt, updatedAt: Date
+    public var deletedAt: Date?
     
     public init(
         id: ObjectId,
@@ -17,8 +18,8 @@ public struct ConversationOutPut: Identifiable {
         admins: [UserOutput]? = nil,
         members: [UserOutput]? = nil,
         lastMessage: MessageItem?,
-        createdAt: Date? = nil,
-        updatedAt: Date? = nil,
+        createdAt: Date,
+        updatedAt: Date,
         deletedAt: Date? = nil
     ) {
         self.id = id
@@ -43,7 +44,8 @@ extension ConversationOutPut: Hashable {
     }
     
     public static func == (lhs: ConversationOutPut, rhs: ConversationOutPut) -> Bool {
-        lhs.id == rhs.id
+        lhs.id == rhs.id &&
+        lhs.lastMessage == rhs.lastMessage
     }
     
     public static func < (lhs: ConversationOutPut, rhs: ConversationOutPut) -> Bool {

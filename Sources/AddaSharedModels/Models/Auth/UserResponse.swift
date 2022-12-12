@@ -1,26 +1,4 @@
-//
-//  UserResponse.swift
-//  
-//
-//  Created by Alif on 7/6/20.
-//
 
-#if os(macOS) || os(Linux)
-import Vapor
-
-extension RefreshTokenResponse: Content {}
-extension LoginResponse: Content {}
-extension UserSuccessResponse: Content {}
-
-#endif
-
-public struct UserSuccessResponse: Codable {
-    let user: UserOutput
-    
-    public init(user: UserOutput) {
-        self.user = user
-    }
-}
 
 public struct RefreshTokenResponse: Codable {
     public var accessToken: String
@@ -33,25 +11,27 @@ public struct RefreshTokenResponse: Codable {
 }
 
 
-// MARK: - Login Response
+// MARK: - Login Response for mobile auth
 
-public struct LoginResponse: Codable, Equatable {
-  public let status: String
-  public let user: UserOutput?
-  public let access: RefreshTokenResponse?
+public struct SuccessfulLoginResponse: Codable {
+    public let status: String
+    public let user: UserOutput?
+    public let access: RefreshTokenResponse?
 
-  public init(
-    status: String,
-    user: UserOutput? = nil,
-    access: RefreshTokenResponse? = nil
-  ) {
-    self.status = status
-    self.user = user
-    self.access = access
-  }
-    
-    public static func == (lhs: LoginResponse, rhs: LoginResponse) -> Bool {
-        lhs.user == rhs.user
-        && lhs.access?.accessToken == rhs.access?.accessToken
+    public init(
+      status: String,
+      user: UserOutput? = nil,
+      access: RefreshTokenResponse? = nil
+    ) {
+      self.status = status
+      self.user = user
+      self.access = access
+    }
+
+    public static func == (lhs: Self, rhs: Self) -> Bool {
+      lhs.user == rhs.user
+      && lhs.access?.accessToken == rhs.access?.accessToken
     }
 }
+
+extension SuccessfulLoginResponse: Equatable {}

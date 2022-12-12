@@ -1,9 +1,3 @@
-//
-//  Attachment.swift
-//  
-//
-//  Created by Saroar Khandoker on 19.11.2020.
-//
 
 import Foundation
 import BSON

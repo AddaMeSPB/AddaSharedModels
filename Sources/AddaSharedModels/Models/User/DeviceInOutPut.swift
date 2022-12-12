@@ -21,7 +21,9 @@ public struct DeviceInOutPut: Codable, Equatable, Hashable, Identifiable {
         osVersion: String? = nil,
         token: String,
         voipToken: String,
-        createdAt: Date? = nil, updatedAt: Date? = nil
+        createdAt: Date? = nil,
+        updatedAt: Date? = nil,
+        deletedAt: Date? = nil
     ) {
         self.id = id
         self.ownerId = ownerId
@@ -33,5 +35,6 @@ public struct DeviceInOutPut: Codable, Equatable, Hashable, Identifiable {
         self.voipToken = voipToken
         self.createdAt = createdAt
         self.updatedAt = updatedAt
+        self.deletedAt = deletedAt
     }
 }

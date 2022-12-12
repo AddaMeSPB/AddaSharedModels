@@ -1,5 +1,4 @@
 
-#if os(macOS) || os(Linux)
 import Foundation
 import BSON
 
@@ -14,6 +13,7 @@ public struct EventOputput: Codable {
     public var isActive: Bool
     public var categoriesId: ObjectId
     public var conversationsId: ObjectId
+    public var ownerId: ObjectId
     
     // Place Information
     public var addressName: String
@@ -36,6 +36,7 @@ public struct EventOputput: Codable {
             isActive: isActive,
             conversationsId: conversationsId,
             categoriesId: categoriesId,
+            ownerId: ownerId,
             addressName: addressName,
             sponsored: sponsored,
             overlay: overlay,
@@ -57,6 +58,7 @@ public struct EventOputput: Codable {
         isActive: Bool,
         conversationsId: ObjectId,
         categoriesId: ObjectId,
+        userId: ObjectId,
         addressName: String,
         sponsored: Bool? = nil,
         overlay: Bool? = nil,
@@ -73,6 +75,7 @@ public struct EventOputput: Codable {
         self.isActive = isActive
         self.conversationsId = conversationsId
         self.categoriesId = categoriesId
+        self.ownerId = userId
         self.addressName = addressName
         self.sponsored = sponsored
         self.overlay = overlay
@@ -96,9 +99,8 @@ extension EventOputput: Equatable {
       return lhs.name == rhs.name
         && lhs.categoriesId == rhs.categoriesId
         && lhs.conversationsId == rhs.conversationsId
+        && lhs.ownerId == rhs.ownerId
         && lhs.duration == rhs.duration
         && lhs.addressName == rhs.addressName
     }
 }
-
-#endif

@@ -1,22 +1,22 @@
 import URLRouting
 
 public enum AuthenticationRoute: Equatable {
-    case login(input: VerifySMSInOutput)
-    case verifySms(input: VerifySMSInOutput)
+    case loginViaEmail(EmailLoginInput)
+    case verifyEmail(VerifyEmailInput)
     case refreshToken(input: RefreshTokenInput)
 }
 
 public let authenticationRouter = OneOf {
-    Route(.case(AuthenticationRoute.login)) {
-        Path { "login" }
+    Route(.case(AuthenticationRoute.loginViaEmail)) {
+        Path { "otp_login_email" }
         Method.post
-        Body(.json(VerifySMSInOutput.self))
+        Body(.json(EmailLoginInput.self))
     }
 
-    Route(.case(AuthenticationRoute.verifySms)) {
-        Path { "verify_sms" }
+    Route(.case(AuthenticationRoute.verifyEmail)) {
+        Path { "verify_otp_email" }
         Method.post
-        Body(.json(VerifySMSInOutput.self))
+        Body(.json(VerifyEmailInput.self))
     }
 
     Route(.case(AuthenticationRoute.refreshToken)) {

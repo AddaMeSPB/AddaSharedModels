@@ -34,7 +34,7 @@ public let userRouter = OneOf {
     
     Route(.case(UserRoute.attachments)) {
         Path { "attachments" }
-        attachmentsRouter
+        attachmentsRoute
     }
     
     Route(.case(UserRoute.conversations)) {

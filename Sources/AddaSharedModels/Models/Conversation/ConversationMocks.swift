@@ -42,7 +42,7 @@ extension AddUser: Equatable {
 extension AddUser {
     static public let draff = AddUser(
         conversationsId: ConversationOutPut.exploreAreaDraff.id,
-        usersId: UserOutput.withFirstName.id!
+        usersId: UserOutput.withFirstName.id
     )
 }
 

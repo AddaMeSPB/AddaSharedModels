@@ -9,10 +9,11 @@ public struct EventResponse: Codable, Identifiable {
     public var details: String?
     public var imageUrl: String?
     public var duration: Int
-    public let distance: Double?
+    public var distance: Double?
     public var isActive: Bool
     public var categoriesId: ObjectId
     public var conversationsId: ObjectId
+    public var ownerId: ObjectId
     
     // Place Information
     public var addressName: String
@@ -36,6 +37,7 @@ public struct EventResponse: Codable, Identifiable {
             isActive: isActive,
             conversationsId: conversationsId,
             categoriesId: categoriesId,
+            ownerId: ownerId,
             addressName: addressName,
             sponsored: sponsored,
             overlay: overlay,
@@ -57,6 +59,7 @@ public struct EventResponse: Codable, Identifiable {
         isActive: Bool,
         conversationsId: ObjectId,
         categoriesId: ObjectId,
+        ownerId: ObjectId,
         addressName: String,
         sponsored: Bool? = nil,
         overlay: Bool? = nil,
@@ -74,6 +77,7 @@ public struct EventResponse: Codable, Identifiable {
         self.isActive = isActive
         self.conversationsId = conversationsId
         self.categoriesId = categoriesId
+        self.ownerId = ownerId
         self.addressName = addressName
         self.sponsored = sponsored
         self.overlay = overlay
@@ -98,6 +102,7 @@ extension EventResponse: Equatable {
       return lhs.name == rhs.name
         && lhs.categoriesId == rhs.categoriesId
         && lhs.conversationsId == rhs.conversationsId
+        && lhs.ownerId == rhs.ownerId
         && lhs.duration == rhs.duration
         && lhs.addressName == rhs.addressName
     }

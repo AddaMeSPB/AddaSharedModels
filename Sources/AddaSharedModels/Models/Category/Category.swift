@@ -47,33 +47,3 @@ extension CategoriesResponse: Equatable {
         return lhs.categories == rhs.categories
     }
 }
-
-//func usersHandler(
-//  request: Request,
-//  route: UsersRoute
-//) async throws -> AsyncResponseEncodable {
-//  switch route {
-//  case .create(_):
-//    return [String: String]()
-//  case let .user(userId, route):
-//    return try await userHandler(request: request, userId: userId, route: route)
-//  }
-//}
-//
-//func userHandler(
-//  request: Request,
-//  userId: Int,
-//  route: UserRoute
-//) async throws -> AsyncResponseEncodable {
-//  switch route {
-//  case let .books(route):
-//    return try await booksHandler(request: request, userId: userId, route: route)
-//  case .fetch:
-//    return UserResponse(
-//      id: userId,
-//      name: "Blob \(userId)",
-//      booksURL: request.application.router
-//        .url(for: .users(.user(userId, .books())))
-//    )
-//  }
-//}

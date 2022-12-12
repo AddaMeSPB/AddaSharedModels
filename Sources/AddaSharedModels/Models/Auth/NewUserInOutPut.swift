@@ -1,16 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by Saroar Khandoker on 18.07.2022.
-//
-
-#if os(macOS) || os(Linux)
-import Vapor
-
-extension NewUserInOutPut: Content {}
-
-#endif
 
 import BSON
 

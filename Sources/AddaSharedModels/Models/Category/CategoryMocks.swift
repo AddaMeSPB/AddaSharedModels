@@ -11,22 +11,22 @@ extension CreateCategory {
 
 extension CategoryResponse {
     static public var walkAroundDraff: CategoryResponse = .init(
-        id: ObjectId("5fbfe53675a93bds87c4cb1c")!,
+        id: ObjectId(),
         name: CreateCategory.walkAroundDraff.name, url: .home
     )
     
     static public var runningDraff: CategoryResponse = .init(
-        id: ObjectId("5fbfe53675a93bfa87c4cb12")!,
+        id: ObjectId(),
         name: CreateCategory.runningDraff.name, url: .home
     )
     
     static public var exploreAreaDraff: CategoryResponse = .init(
-        id: ObjectId("5fbfe5367ea93bda87c4cb13")!,
+        id: ObjectId(),
         name: CreateCategory.exploreAreaDraff.name, url: .home
     )
     
     static public var lookingForAcompanyDraff: CategoryResponse = .init(
-        id: ObjectId("5fbfq53675a93bda87c4cb14")!,
+        id: ObjectId(),
         name: CreateCategory.lookingForAcompanyDraff.name, url: .home
     )
 }

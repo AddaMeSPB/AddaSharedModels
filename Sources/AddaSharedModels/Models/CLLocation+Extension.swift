@@ -1,6 +1,5 @@
 
 #if os(iOS)
-
 import CoreLocation
 import MapKit
 
@@ -20,5 +19,4 @@ extension CLLocation {
     return [coordinate.latitude, coordinate.longitude]
   }
 }
-
 #endif

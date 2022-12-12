@@ -7,12 +7,6 @@
 
 import Foundation
 
-private let jsonEncoder: JSONEncoder = {
-  let encoder = JSONEncoder()
-  encoder.dateEncodingStrategy = .iso8601
-  return encoder
-}()
-
 public enum ChatOutGoingEvent: Encodable, Decodable {
   
   case connect(UserOutput)

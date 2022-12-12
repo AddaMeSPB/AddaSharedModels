@@ -1,9 +1,3 @@
-//
-//  SiteRputer.swift
-//  
-//
-//  Created by Saroar Khandoker on 17.07.2022.
-//
 
 import URLRouting
 
@@ -13,7 +7,6 @@ public enum SiteRoute: Equatable {
     case authEngine(AuthEngineRoute)
     case terms
     case privacy
-
 }
 
 public let siteRouter = OneOf {

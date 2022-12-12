@@ -8,23 +8,56 @@
 import Foundation
 import BSON
 
-public struct UserOutput: Codable, Equatable, Hashable, Identifiable {
-    
-    public var id: ObjectId?
-    public var firstName, lastName, email: String?
-    public var phoneNumber: String
+/// Dont have any role and language Need to combine with UserGetObject
+public struct UserOutput: Codable, Identifiable {
+
+    public var id: ObjectId
+    public var fullName, phoneNumber, email: String?
+    public var role: UserRole
+    public var language: UserLanguage
+
+    // User Device lists
+    public var devices: [DeviceInOutPut]?
+
+    // User Hangout events
+    public var hangouts: [EventResponse]?
+
+    // Attachments Photo,Video, etc url
     public var attachments: [AttachmentInOutPut]?
+
+    /// Admins Conversations list
     public var adminsConversations: [ConversationOutPut]?
+
+    /// MembersConversaions list
     public var membersConversaions: [ConversationOutPut]?
+
+    /// Date
     public var createdAt, updatedAt, deletedAt: Date?
+
     public var url: URL
-    
+
+    /// Init
+    /// - Parameters:
+    ///   - id: ObjectId(mongodb ID)  are similar to a GUID or a UUID, and can be used to uniquely identify objects without a centralized
+    ///   - fullName: String combine Firstname + Lastname
+    ///   - email: Email
+    ///   - phoneNumber: phoneNumber
+    ///   - attachments: attachments for images
+    ///   - adminsConversations: admins Conversations list
+    ///   - membersConversaions: membersConversaions list
+    ///   - url: url description
+    ///   - createdAt: createdAt its Date
+    ///   - updatedAt: updatedAt its Date
+    ///   - deletedAt: deletedAt Date
     public init(
-        id: ObjectId? = nil,
-        firstName: String? = nil,
-        lastName: String? = nil,
+        id: ObjectId,
+        fullName: String? = nil,
         email: String? = nil,
-        phoneNumber: String,
+        phoneNumber: String? = nil,
+        role: UserRole,
+        language: UserLanguage,
+        devices: [DeviceInOutPut]? = nil,
+        hangouts: [EventResponse]? = nil,
         attachments: [AttachmentInOutPut]? = nil,
         adminsConversations: [ConversationOutPut]? = nil,
         membersConversaions: [ConversationOutPut]? = nil,
@@ -34,10 +67,13 @@ public struct UserOutput: Codable, Equatable, Hashable, Identifiable {
         deletedAt: Date? = nil
     ) {
         self.id = id
-        self.firstName = firstName
-        self.lastName = lastName
+        self.fullName = fullName
         self.email = email
         self.phoneNumber = phoneNumber
+        self.role = role
+        self.language = language
+        self.devices = devices
+        self.hangouts = hangouts
         self.attachments = attachments
         self.adminsConversations = adminsConversations
         self.membersConversaions = membersConversaions
@@ -61,35 +97,7 @@ extension UserOutput {
 //    }
 }
 
-extension UserOutput {
-    public var fullName: String {
-      var fullName = ""
-      if let firstN = firstName {
-        fullName += "\(firstN) "
-      }
-
-      if let lastN = lastName {
-        fullName += "\(lastN)"
-      }
-
-      if fullName.isEmpty {
-        return phoneNumber
-      }
-
-      return fullName
-    }
-
-//    public func hideLast4DigitFromPhoneNumber() -> String {
-//      guard let user: User = KeychainService.loadCodable(for: .user) else {
-//        return "SwiftUI preview missing User"
-//      }
-//
-//      let lastFourCharacters = String(phoneNumber.suffix(4))
-//      let phoneNumWithLastFourHiddenCharcters = phoneNumber.replace(
-//        target: lastFourCharacters, withString: "****")
-//
-//      return self.id == id ? phoneNumber : phoneNumWithLastFourHiddenCharcters
-//    }
+extension UserOutput: Equatable, Hashable {
 
     public func hash(into hasher: inout Hasher) {
       hasher.combine(id)
@@ -97,8 +105,8 @@ extension UserOutput {
 
     public static func == (lhs: UserOutput, rhs: UserOutput) -> Bool {
       return
-        lhs.id == rhs.id && lhs.phoneNumber == rhs.phoneNumber
-        && lhs.firstName == rhs.firstName && lhs.lastName == rhs.lastName && lhs.email == rhs.email
+        lhs.id == rhs.id && lhs.email == rhs.email
+        && lhs.fullName == rhs.fullName
     }
 }
 

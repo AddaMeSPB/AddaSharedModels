@@ -1,68 +1,47 @@
-//
-//  VerifySMSInput.swift
-//  
-//
-//  Created by Alif on 7/6/20.
-//
-
-#if os(macOS) || os(Linux)
-import Vapor
-
-extension VerifySMSInOutput: Content {}
-extension LoginInput: Content {}
-extension SendUserVerificationResponse: Content {}
-extension UserVerificationPayload: Content {}
-#endif
 
 import BSON
 
-public struct VerifySMSInOutput: Codable, Equatable {
-  public var phoneNumber: String
-  public var attemptId: String?
-  public var code: String?
-  public var isLoggedIn: Bool? = false
+// MARK:- OTP via Email
+public struct EmailLoginInput: Codable, Equatable {
+    public init(
+        email: String
+    ) {
+        self.email = email
+    }
+
+    public var email: String
+}
+
+public struct EmailLoginOutput: Codable, Equatable {
+  public var email: String
+  public var attemptId: ObjectId
 
   public init(
-    phoneNumber: String,
-    attemptId: String? = nil,
-    code: String? = nil,
-    isLoggedIn: Bool? = false
+    email: String,
+    attemptId: ObjectId
   ) {
-    self.phoneNumber = phoneNumber
+    self.email = email
     self.attemptId = attemptId
-    self.code = code
-    self.isLoggedIn = isLoggedIn
   }
 
 }
 
-// this belove code have to remove we have already alternative struct this
-public struct LoginInput: Codable {
-    public init(phoneNumber: String) {
-        self.phoneNumber = phoneNumber
-    }
-    
-    public let phoneNumber: String
-}
+public struct VerifyEmailInput: Codable, Equatable {
+  public let niceName: String
+  public var email: String
+  public var attemptId: ObjectId
+  public var code: String
 
-public struct SendUserVerificationResponse: Codable {
-    public init(phoneNumber: String, attemptId: ObjectId) {
-        self.phoneNumber = phoneNumber
-        self.attemptId = attemptId
-    }
-    
-    public let phoneNumber: String
-    public let attemptId: ObjectId
-}
+  public init(
+    niceName: String,
+    email: String,
+    attemptId: ObjectId,
+    code: String
+  ) {
+    self.niceName = niceName
+    self.email = email
+    self.attemptId = attemptId
+    self.code = code
+  }
 
-public struct UserVerificationPayload: Codable {
-    public init(attemptId: ObjectId, phoneNumber: String, code: String) {
-        self.attemptId = attemptId
-        self.phoneNumber = phoneNumber
-        self.code = code
-    }
-    
-    public let attemptId: ObjectId
-    public let phoneNumber: String
-    public let code: String
 }
