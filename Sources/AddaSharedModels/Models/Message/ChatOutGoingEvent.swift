@@ -9,8 +9,8 @@ import Foundation
 
 public enum ChatOutGoingEvent: Encodable, Decodable {
   
-  case connect(UserOutput)
-  case disconnect(UserOutput)
+  case connect
+  case disconnect
   case conversation(MessageItem)
   case message(MessageItem)
   case notice(String)
@@ -30,11 +30,9 @@ public enum ChatOutGoingEvent: Encodable, Decodable {
     
     switch type {
     case "connect":
-      let connect =  try container.decode(UserOutput.self, forKey: .user)
-      self = .connect(connect)
+      self = .connect
     case "disconnect":
-      let disconnect = try container.decode(UserOutput.self, forKey: .user)
-      self = .disconnect(disconnect)
+      self = .disconnect
     case "message":
       let message = try container.decode(MessageItem.self, forKey: .message)
       self = .message(message)
@@ -56,12 +54,10 @@ public enum ChatOutGoingEvent: Encodable, Decodable {
     var kvc = encoder.container(keyedBy: String.self)
     
     switch self {
-    case .connect(let user):
+    case .connect:
       try kvc.encode("connect", forKey: "type")
-      try kvc.encode(user, forKey: "user")
-    case .disconnect(let user):
+    case .disconnect:
       try kvc.encode("disconnect", forKey: "type")
-      try kvc.encode(user, forKey: "user")
     case .message(let message):
       try kvc.encode("message", forKey: "type")
       try kvc.encode(message, forKey: "message")
