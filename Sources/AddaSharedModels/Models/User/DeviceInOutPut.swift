@@ -8,7 +8,7 @@ public struct DeviceInOutPut: Codable, Equatable, Hashable, Identifiable {
     public var name: String
     public var model: String?
     public var osVersion: String?
-    public var token: String
+    public var pushToken: String
     public var voipToken: String
     public var createdAt, updatedAt, deletedAt: Date?
     
@@ -19,7 +19,7 @@ public struct DeviceInOutPut: Codable, Equatable, Hashable, Identifiable {
         name: String,
         model: String? = nil,
         osVersion: String? = nil,
-        token: String,
+        pushToken: String,
         voipToken: String,
         createdAt: Date? = nil,
         updatedAt: Date? = nil,
@@ -31,7 +31,7 @@ public struct DeviceInOutPut: Codable, Equatable, Hashable, Identifiable {
         self.name = name
         self.model = model
         self.osVersion = osVersion
-        self.token = token
+        self.pushToken = pushToken
         self.voipToken = voipToken
         self.createdAt = createdAt
         self.updatedAt = updatedAt
