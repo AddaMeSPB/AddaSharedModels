@@ -18,7 +18,7 @@ let package = Package(
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         // Route
-        .package(url: "https://github.com/pointfreeco/swift-url-routing.git", from: "0.4.0"),
+        .package(url: "https://github.com/pointfreeco/swift-url-routing.git", from: "0.6.0"),
         .package(url: "https://github.com/OpenKitten/BSON.git", from: "7.0.0")
     
     ],
